@@ -40,6 +40,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -88,6 +89,10 @@
     <ProjectReference Include="..\PB.SpiralOfTest.Manager.Party\PB.SpiralOfTest.Manager.Party.csproj">
       <Project>{e781c786-ab4e-447e-9ac0-0e6ac30604bd}</Project>
       <Name>PB.SpiralOfTest.Manager.Party</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.Proxy.Party\PB.SpiralOfTest.Proxy.Party.csproj">
+      <Project>{ec24c8f3-a681-4e8f-962f-138945a78395}</Project>
+      <Name>PB.SpiralOfTest.Proxy.Party</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

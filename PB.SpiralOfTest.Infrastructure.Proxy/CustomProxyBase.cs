@@ -16,5 +16,34 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         protected abstract Binding CreateBinding();
 
+        private ChannelFactory<T> _channelFactory;
+
+        public ChannelFactory<T> ChannelFactory
+        {
+            get
+            {
+                if (_channelFactory == null)
+                {
+                    _channelFactory = CreateFactory(DefaultTimeout, DefaultMaxMessageSize);
+                }
+                return _channelFactory;
+            }
+        }
+
+        // TODO: Perhaps it is not a good idea to create and destroy a channel for each call?
+        public void Call(Action<T> action)
+        {
+            var channel = ChannelFactory.CreateChannel();
+            try
+            {
+                action(channel);
+            }
+            finally
+            {
+                var proxy = channel as ICommunicationObject;
+                proxy?.Close();
+            }
+        }
+
     }
 }

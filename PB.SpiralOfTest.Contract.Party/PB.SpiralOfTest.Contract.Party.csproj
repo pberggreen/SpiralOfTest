@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{36C1E69B-1466-4DAF-B9D0-04D3F0A7B8F5}</ProjectGuid>
+    <ProjectGuid>{52639C58-003B-41D0-9C43-9A801F8D4E83}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PB.SpiralOfTest.Infrastructure.Proxy</RootNamespace>
-    <AssemblyName>PB.SpiralOfTest.Infrastructure.Proxy</AssemblyName>
+    <RootNamespace>PB.SpiralOfTest.Contract.Party</RootNamespace>
+    <AssemblyName>PB.SpiralOfTest.Contract.Party</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,7 +32,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,8 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomProxyBase.cs" />
-    <Compile Include="IntranetProxy.cs" />
+    <Compile Include="IParty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
