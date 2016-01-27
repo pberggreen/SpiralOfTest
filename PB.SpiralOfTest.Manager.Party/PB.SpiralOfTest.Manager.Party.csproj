@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E781C786-AB4E-447E-9AC0-0E6AC30604BD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PB.SpiralOfTest.Manager.Party</RootNamespace>
+    <AssemblyName>App_Code.PB.SpiralOfTest.Manager.Party</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PartyManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PB.SpiralOfTest.Common\PB.SpiralOfTest.Common.csproj">
+      <Project>{e2e2a00e-233f-4cb2-9b5c-48f8fdb5d324}</Project>
+      <Name>PB.SpiralOfTest.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.DataAccess.EmailTemplate\PB.SpiralOfTest.Access.EmailTemplate.csproj">
+      <Project>{9f527ee4-1790-4f62-aee7-4113383b6701}</Project>
+      <Name>PB.SpiralOfTest.Access.EmailTemplate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.DataAccess.Guest\PB.SpiralOfTest.Access.Guest.csproj">
+      <Project>{3ff00111-ccb9-489f-a1c8-1ac52e080c45}</Project>
+      <Name>PB.SpiralOfTest.Access.Guest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.Engine.Guest\PB.SpiralOfTest.Engine.EmailSender.csproj">
+      <Project>{c831beab-fdd6-43a7-b0ec-77ea3d0e8451}</Project>
+      <Name>PB.SpiralOfTest.Engine.EmailSender</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure.ServiceBase\PB.SpiralOfTest.Infrastructure.Service.csproj">
+      <Project>{4f819c2b-1847-411b-9ca5-be57829db7ad}</Project>
+      <Name>PB.SpiralOfTest.Infrastructure.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
