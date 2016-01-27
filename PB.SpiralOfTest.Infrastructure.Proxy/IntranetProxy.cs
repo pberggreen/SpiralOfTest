@@ -17,8 +17,6 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         protected override EndpointAddress CreateAddress(string baseAddress)
         {
-            var serviceType = typeof(T);
-            var serviceName = serviceType.FullName.Replace("Contract", "Service");
             // Remove schema if present
             var index = baseAddress.IndexOf("//");
             if (index != -1)
@@ -27,14 +25,17 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             }
             baseAddress = "net.tcp://" + baseAddress;
             var uriBuilder = new UriBuilder(baseAddress);
-            uriBuilder.Path += serviceName;
+            uriBuilder.Path += EnforceEndpointName;
             return new EndpointAddress(uriBuilder.Uri);
         }
 
         protected override Binding CreateBinding()
         {
             var binding = new NetTcpBinding();
+            binding.TransactionFlow = true;
+            binding.ReliableSession.Enabled = true; 
             return binding;
         }
+
     }
 }

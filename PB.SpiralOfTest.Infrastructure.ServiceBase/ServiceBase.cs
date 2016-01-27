@@ -1,4 +1,5 @@
-﻿using PB.SpiralOfTest.Common;
+﻿using System;
+using PB.SpiralOfTest.Common;
 
 namespace PB.SpiralOfTest.Infrastructure.Service
 {
@@ -19,6 +20,14 @@ namespace PB.SpiralOfTest.Infrastructure.Service
             //    IoC.RegisterType<IServiceFactory, InProcServiceFactory>();
         }
 
+        //public SessionContext Session
+        //{
+        //    get
+        //    {
+        //        return Header<SessionContext>.GetIncoming(); 
+        //    }
+        //}
+
         public static T GetProxy<T>() where T : class
         {
             // Must create an InProc proxy 
@@ -32,5 +41,9 @@ namespace PB.SpiralOfTest.Infrastructure.Service
 
             return serviceFactory.CreateService();
         }
+
+        //public void Dispose()
+        //{
+        //}
     }
 }

@@ -8,6 +8,8 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
     {
         protected virtual TimeSpan DefaultTimeout => TimeSpan.FromMinutes(1);
 
+        protected virtual TimeSpan DebugTimeout => TimeSpan.FromHours(1);
+
         protected virtual long DefaultMaxMessageSize => 65536;
 
         protected abstract ChannelFactory<T> CreateFactory(TimeSpan timeout, long messageSize);
@@ -15,6 +17,14 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
         protected abstract EndpointAddress CreateAddress(string baseAddress);
 
         protected abstract Binding CreateBinding();
+
+        protected virtual string EnforceEndpointName
+        {
+            get
+            {
+                return typeof(T).FullName.Replace("Contract", "Service");
+            }
+        }
 
         private ChannelFactory<T> _channelFactory;
 

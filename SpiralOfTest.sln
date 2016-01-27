@@ -49,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceModelEx", "ServiceMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceModelEx", "..\ServiceModelEx\ServiceModelEx\ServiceModelEx.csproj", "{0858C710-AF53-4049-B98E-CFE3638D1228}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PB.SpiralOfTest.Infrastructure.Host", "PB.SpiralOfTest.Infrastructure.Host\PB.SpiralOfTest.Infrastructure.Host.csproj", "{792E57D5-D022-4226-A83B-B8A48870243F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -227,6 +229,18 @@ Global
 		{0858C710-AF53-4049-B98E-CFE3638D1228}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0858C710-AF53-4049-B98E-CFE3638D1228}.Release|x86.ActiveCfg = Release|x86
 		{0858C710-AF53-4049-B98E-CFE3638D1228}.Release|x86.Build.0 = Release|x86
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Debug|x86.Build.0 = Debug|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Design|Any CPU.ActiveCfg = Debug|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Design|Any CPU.Build.0 = Debug|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Design|x86.ActiveCfg = Debug|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Design|x86.Build.0 = Debug|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Release|x86.ActiveCfg = Release|Any CPU
+		{792E57D5-D022-4226-A83B-B8A48870243F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -245,5 +259,6 @@ Global
 		{52639C58-003B-41D0-9C43-9A801F8D4E83} = {CD5705E4-81A4-4939-9236-9971634C72EC}
 		{FD866DC5-C50B-438C-B34E-57A96C496F0E} = {8C4FBCAD-CADF-4D79-AA77-20323D547C57}
 		{0858C710-AF53-4049-B98E-CFE3638D1228} = {ED62AC4C-A331-4F13-9C0B-E54F63791534}
+		{792E57D5-D022-4226-A83B-B8A48870243F} = {EE33D795-3794-4411-BE56-EF5A61728A75}
 	EndGlobalSection
 EndGlobal

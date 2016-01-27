@@ -59,6 +59,10 @@
       <Project>{52639c58-003b-41d0-9c43-9a801f8d4e83}</Project>
       <Name>PB.SpiralOfTest.Contract.Party</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure.Host\PB.SpiralOfTest.Infrastructure.Host.csproj">
+      <Project>{792e57d5-d022-4226-a83b-b8a48870243f}</Project>
+      <Name>PB.SpiralOfTest.Infrastructure.Host</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure.ServiceBase\PB.SpiralOfTest.Infrastructure.Service.csproj">
       <Project>{4f819c2b-1847-411b-9ca5-be57829db7ad}</Project>
       <Name>PB.SpiralOfTest.Infrastructure.Service</Name>

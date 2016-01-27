@@ -2,6 +2,7 @@
 using System.ServiceModel;
 using PB.SpiralOfTest.Manager.Party;
 using ServiceModelEx;
+using PB.SpiralOfTest.Infrastructure.Host;
 
 namespace PB.SpiralOfTest.Host.Console
 {
@@ -14,10 +15,10 @@ namespace PB.SpiralOfTest.Host.Console
             System.Console.Title = m_ThisName;
             System.Console.WriteLine("Service Host for the PartyManager");
 
-            ServiceHost<PartyManager> partyHost = null;
+            IntranetServiceHost<PartyManager> partyHost = null;
             try
             {
-                partyHost = new ServiceHost<PartyManager>();
+                partyHost = new IntranetServiceHost<PartyManager>();
                 partyHost.Open();
                 System.Console.WriteLine("{0}.Main():  Party ServiceHost opened OK.", m_ThisName);
 
