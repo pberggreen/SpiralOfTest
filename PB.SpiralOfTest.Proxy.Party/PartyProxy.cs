@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
-using PB.SpiralOfTest.Manager.Party;
+using PB.SpiralOfTest.Contract.Party;
 
 namespace PB.SpiralOfTest.Proxy.Party
 {

@@ -52,8 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ServiceModelEx\ServiceModelEx\ServiceModelEx.csproj">
-      <Project>{0858C710-AF53-4049-B98E-CFE3638D1228}</Project>
+      <Project>{0858c710-af53-4049-b98e-cfe3638d1228}</Project>
       <Name>ServiceModelEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.Contract.Party\PB.SpiralOfTest.Contract.Party.csproj">
+      <Project>{52639c58-003b-41d0-9c43-9a801f8d4e83}</Project>
+      <Name>PB.SpiralOfTest.Contract.Party</Name>
     </ProjectReference>
     <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure.ServiceBase\PB.SpiralOfTest.Infrastructure.Service.csproj">
       <Project>{4f819c2b-1847-411b-9ca5-be57829db7ad}</Project>

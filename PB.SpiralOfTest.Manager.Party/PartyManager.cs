@@ -1,19 +1,13 @@
 ﻿using System;
-using System.ServiceModel;
 using PB.SpiralOfTest.Access.Guest;
 using PB.SpiralOfTest.Common;
 using PB.SpiralOfTest.Engine.EmailSender;
 using PB.SpiralOfTest.Infrastructure.Service;
+using PB.SpiralOfTest.Contract.Party;
+using System.Diagnostics;
 
 namespace PB.SpiralOfTest.Manager.Party
 {
-    [ServiceContract]
-    public interface IPartyManager
-    {
-        [OperationContract]
-        void SendInvitations(string templateName, Guid partyId);
-    }
-
     public class PartyManager : ServiceBase, IPartyManager
     {
         static PartyManager()
@@ -27,6 +21,8 @@ namespace PB.SpiralOfTest.Manager.Party
 
         public void SendInvitations(string templateName, Guid partyId)
         {
+            Debug.WriteLine("PartyManager.SendInvitations");
+
             var guestAccess = GetProxy<IGuestAccess>();
             var guests = guestAccess.GetGuests(partyId);
 

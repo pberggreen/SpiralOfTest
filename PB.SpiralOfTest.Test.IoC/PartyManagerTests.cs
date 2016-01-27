@@ -8,6 +8,7 @@ using PB.SpiralOfTest.Access.Guest;
 using PB.SpiralOfTest.Engine.EmailSender;
 using PB.SpiralOfTest.Infrastructure.Service;
 using PB.SpiralOfTest.Manager.Party;
+using PB.SpiralOfTest.Contract.Party;
 
 namespace PB.SpiralOfTest.Test
 {

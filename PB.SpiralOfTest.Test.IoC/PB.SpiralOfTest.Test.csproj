@@ -66,6 +66,10 @@
       <Project>{e2e2a00e-233f-4cb2-9b5c-48f8fdb5d324}</Project>
       <Name>PB.SpiralOfTest.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.Contract.Party\PB.SpiralOfTest.Contract.Party.csproj">
+      <Project>{52639c58-003b-41d0-9c43-9a801f8d4e83}</Project>
+      <Name>PB.SpiralOfTest.Contract.Party</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PB.SpiralOfTest.DataAccess.EmailSender\PB.SpiralOfTest.Access.EmailProvider.csproj">
       <Project>{1064f1c7-4ce6-4dc9-b846-bd699071ae17}</Project>
       <Name>PB.SpiralOfTest.Access.EmailProvider</Name>
