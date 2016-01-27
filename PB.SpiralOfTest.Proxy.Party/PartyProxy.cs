@@ -1,26 +1,17 @@
 ﻿using System;
-using System.ServiceModel;
 using PB.SpiralOfTest.Contract.Party;
+using PB.SpiralOfTest.Infrastructure.Proxy;
 
 namespace PB.SpiralOfTest.Proxy.Party
 {
-    public class PartyProxy: ClientBase<IPartyManager>, IPartyManager
+    public class PartyProxy: IntranetProxy<IPartyManager>, IPartyManager
     {
-        public PartyProxy(string endpointName) : base(endpointName)
-        {
-        }
-
         public void SendInvitations(string templateName, Guid partyId)
         {
-            try
-            {
-                Channel.SendInvitations(templateName, partyId);
-            }
-            catch (Exception)
-            {
-                Abort();
-                throw;
-            }
+            Call(channel => {
+                channel.SendInvitations(templateName, partyId);
+            });
         }
+
     }
 }

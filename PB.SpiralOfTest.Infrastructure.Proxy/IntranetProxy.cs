@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 
@@ -8,17 +9,32 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
     {
         protected override ChannelFactory<T> CreateFactory(TimeSpan timeout, long messageSize)
         {
-            throw new NotImplementedException();
+            var baseAddress = ConfigurationManager.AppSettings["BaseAddress"];
+            var binding = CreateBinding();
+            var address = CreateAddress(baseAddress);
+            return new ChannelFactory<T>(binding, address);
         }
 
-        protected override EndpointAddress CreateAddress(Uri baseAddress)
+        protected override EndpointAddress CreateAddress(string baseAddress)
         {
-            throw new NotImplementedException();
+            var serviceType = typeof(T);
+            var serviceName = serviceType.FullName.Replace("Contract", "Service");
+            // Remove schema if present
+            var index = baseAddress.IndexOf("//");
+            if (index != -1)
+            {
+                baseAddress = baseAddress.Substring(index+2);
+            }
+            baseAddress = "net.tcp://" + baseAddress;
+            var uriBuilder = new UriBuilder(baseAddress);
+            uriBuilder.Path += serviceName;
+            return new EndpointAddress(uriBuilder.Uri);
         }
 
         protected override Binding CreateBinding()
         {
-            throw new NotImplementedException();
+            var binding = new NetTcpBinding();
+            return binding;
         }
     }
 }

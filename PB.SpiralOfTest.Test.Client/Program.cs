@@ -10,7 +10,7 @@ namespace PB.SpiralOfTest.Test.Client
             Console.WriteLine("Press Enter to send invitations");
             Console.ReadLine();
             Console.WriteLine("Sending invitations");
-            var partyManager = new PartyProxy("partyManager");
+            var partyManager = new PartyProxy();
             var partyId = Guid.NewGuid();
             partyManager.SendInvitations("Birthday", partyId);
             Console.ReadLine();

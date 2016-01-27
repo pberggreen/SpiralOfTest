@@ -12,7 +12,7 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         protected abstract ChannelFactory<T> CreateFactory(TimeSpan timeout, long messageSize);
 
-        protected abstract EndpointAddress CreateAddress(Uri baseAddress);
+        protected abstract EndpointAddress CreateAddress(string baseAddress);
 
         protected abstract Binding CreateBinding();
 
