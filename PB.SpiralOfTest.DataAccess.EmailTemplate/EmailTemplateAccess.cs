@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.ServiceModel;
+using PB.SpiralOfTest.Common;
 
 namespace PB.SpiralOfTest.Access.EmailTemplate
 {
@@ -15,6 +16,7 @@ namespace PB.SpiralOfTest.Access.EmailTemplate
     {
         public EmailTemplate GetEmailTemplate(string templateName)
         {
+            Debug.WriteLine(FeatureContext.Current);
             Debug.WriteLine($"EmailTemplateAccess.GetEmailTemplate({templateName})");
             return new EmailTemplate();
         }

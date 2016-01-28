@@ -44,6 +44,12 @@
     <Compile Include="EmailTemplateAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PB.SpiralOfTest.Common\PB.SpiralOfTest.Common.csproj">
+      <Project>{e2e2a00e-233f-4cb2-9b5c-48f8fdb5d324}</Project>
+      <Name>PB.SpiralOfTest.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

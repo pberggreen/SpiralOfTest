@@ -5,6 +5,7 @@ using Moq;
 using PB.SpiralOfTest.Access.EmailProvider;
 using PB.SpiralOfTest.Access.EmailTemplate;
 using PB.SpiralOfTest.Access.Guest;
+using PB.SpiralOfTest.Common;
 using PB.SpiralOfTest.Engine.EmailSender;
 using PB.SpiralOfTest.Infrastructure.Service;
 using PB.SpiralOfTest.Manager.Party;
@@ -35,17 +36,12 @@ namespace PB.SpiralOfTest.Test
         ///</summary>
         public TestContext TestContext
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            get { return testContextInstance; }
+            set { testContextInstance = value; }
         }
 
         #region Additional test attributes
+
         //
         // You can use the following additional attributes as you write your tests:
         //
@@ -65,53 +61,61 @@ namespace PB.SpiralOfTest.Test
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //
+
         #endregion
 
+        //[TestMethod]
+        //public void SendInvitations()
+        //{
+        //    var partyId = Guid.NewGuid();
+        //    var templateName = "Birthday";
+        //    var guest1Name = "Guest1";
+        //    var guest1Email = "guest1@trackman.test";
+
+        //    var guests = new List<Guest>
+        //    {
+        //        new Guest()
+        //        {
+        //            Id = Guid.NewGuid(),
+        //            Name = guest1Name,
+        //            Email = guest1Email
+        //        }
+        //    };
+
+        //    var emailTemplate = new EmailTemplate
+        //    {
+        //        Name = templateName,
+        //        Subject = "Invitation",
+        //        Body = "You're invited to my birthday party"
+        //    };
+
+        //    var guestAccessMock = new Mock<IGuestAccess>();
+        //    guestAccessMock.Setup(m => m.GetGuests(partyId)).Returns(guests);
+        //    //Common.IoC.RegisterInstance<IGuestAccess>(guestAccessMock.Object);
+        //    var guestAccessServiceFactoryMock = new Mock<IServiceFactory<IGuestAccess>>();
+        //    guestAccessServiceFactoryMock.Setup(m => m.CreateService()).Returns(guestAccessMock.Object);
+        //    Common.IoC.RegisterInstance<IServiceFactory<IGuestAccess>>(guestAccessServiceFactoryMock.Object);
+
+        //    //var emailTemplateAccessMock = new Mock<IEmailTemplateAccess>();
+        //    //emailTemplateAccessMock.Setup(m => m.GetEmailTemplate(templateName)).Returns(emailTemplate);
+        //    //Common.IoC.RegisterInstance<IEmailTemplateAccess>(emailTemplateAccessMock.Object);
+
+        //    //var emailEngineMock = new Mock<IEmailSenderEngine>();
+        //    //emailEngineMock.Setup(m => m.SendEmail(templateName, guest1Email));
+        //    //Common.IoC.RegisterInstance<IEmailSenderEngine>(emailEngineMock.Object);
+
+        //    //Common.IoC.RegisterType<IServiceFactory<IEmailTemplateAccess>, PocoServiceFactory<IEmailTemplateAccess>>();
+        //    Common.IoC.RegisterType<IServiceFactory<IEmailSenderEngine>, InProcServiceFactory<IEmailSenderEngine>>();
+        //    var partyManager = ServiceBase.GetProxy<IPartyManager>();
+        //    FeatureContext.Current = new GoldContext();
+        //    partyManager.SendInvitations(templateName, partyId);
+        //}
+
         [TestMethod]
-        public void SendInvitations()
+        public void TextContext()
         {
-            var partyId = Guid.NewGuid();
-            var templateName = "Birthday";
-            var guest1Name = "Guest1";
-            var guest1Email = "guest1@trackman.test";
-
-            var guests = new List<Guest>
-            {
-                new Guest()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = guest1Name, 
-                    Email = guest1Email
-                }
-            };
-
-            var emailTemplate = new EmailTemplate
-            {
-                Name = templateName,
-                Subject = "Invitation",
-                Body = "You're invited to my birthday party"
-            };
-
-            var guestAccessMock = new Mock<IGuestAccess>();
-            guestAccessMock.Setup(m => m.GetGuests(partyId)).Returns(guests);
-            //Common.IoC.RegisterInstance<IGuestAccess>(guestAccessMock.Object);
-            var guestAccessServiceFactoryMock = new Mock<IServiceFactory<IGuestAccess>>();
-            guestAccessServiceFactoryMock.Setup(m => m.CreateService()).Returns(guestAccessMock.Object);
-            Common.IoC.RegisterInstance<IServiceFactory<IGuestAccess>>(guestAccessServiceFactoryMock.Object);
-
-            //var emailTemplateAccessMock = new Mock<IEmailTemplateAccess>();
-            //emailTemplateAccessMock.Setup(m => m.GetEmailTemplate(templateName)).Returns(emailTemplate);
-            //Common.IoC.RegisterInstance<IEmailTemplateAccess>(emailTemplateAccessMock.Object);
-
-            //var emailEngineMock = new Mock<IEmailSenderEngine>();
-            //emailEngineMock.Setup(m => m.SendEmail(templateName, guest1Email));
-            //Common.IoC.RegisterInstance<IEmailSenderEngine>(emailEngineMock.Object);
-
-            //var partyManager = new PartyManager();
-            Common.IoC.RegisterType<IServiceFactory<IEmailTemplateAccess>, PocoServiceFactory<IEmailTemplateAccess>>();
-            Common.IoC.RegisterType<IServiceFactory<IEmailSenderEngine>, InProcServiceFactory<IEmailSenderEngine>>();
-            var partyManager = ServiceBase.GetProxy<IPartyManager>();
-            partyManager.SendInvitations(templateName, partyId);
+            Assert.IsTrue(FeatureContext.Current is BasicContext);
         }
     }
 }
+
