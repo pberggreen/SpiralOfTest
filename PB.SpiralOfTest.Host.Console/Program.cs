@@ -22,6 +22,7 @@ namespace PB.SpiralOfTest.Host.Console
             {
                 serviceBusHost = new ServiceBusServiceHost(typeof(EmailProviderManager), serviceBusConnectionString);
                 serviceBusHost.Open();
+                AppDomain.CurrentDomain.ProcessExit += serviceBusHost.Host_Closed;
                 System.Console.WriteLine("{0}.Main():  ServiceBusHost opened OK.", m_ThisName);
 
                 // more services
@@ -37,6 +38,7 @@ namespace PB.SpiralOfTest.Host.Console
             {
                 partyHost = new IntranetServiceHost(typeof(PartyManager), hostName);
                 partyHost.Open();
+                AppDomain.CurrentDomain.ProcessExit += partyHost.Host_Closed;
                 System.Console.WriteLine("{0}.Main():  Party ServiceHost opened OK.", m_ThisName);
 
                 // more services

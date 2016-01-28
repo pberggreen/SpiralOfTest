@@ -11,7 +11,10 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         {
         }
 
-        //protected virtual void Host_Closed(object sender, EventArgs a);
+        public virtual void Host_Closed(object sender, EventArgs a)
+        {
+            Close();
+        }
 
         //protected string ServiceName { get; }
 
