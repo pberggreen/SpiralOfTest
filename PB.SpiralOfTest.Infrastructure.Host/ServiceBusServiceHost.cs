@@ -37,6 +37,11 @@ namespace PB.SpiralOfTest.Infrastructure.Host
             ApplyServiceBusEndpoints();
         }
 
+        protected override string EnforceEndpointName(Type interfaceType)
+        {
+            return interfaceType.Name;
+        }
+
         protected void ApplyServiceBusEndpoints()
         {
             if (!Description.Endpoints.Any(e => e.Binding is NetMessagingBinding))

@@ -56,6 +56,10 @@
       <Project>{0858c710-af53-4049-b98e-cfe3638d1228}</Project>
       <Name>ServiceModelEx</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.Contract.EmailProvider\PB.SpiralOfTest.Contract.EmailProvider.csproj">
+      <Project>{f53b0ff9-e7c4-4946-b202-3473b20f8e71}</Project>
+      <Name>PB.SpiralOfTest.Contract.EmailProvider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PB.SpiralOfTest.Contract.Party\PB.SpiralOfTest.Contract.Party.csproj">
       <Project>{52639c58-003b-41d0-9c43-9a801f8d4e83}</Project>
       <Name>PB.SpiralOfTest.Contract.Party</Name>
@@ -67,6 +71,10 @@
     <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure.ServiceBase\PB.SpiralOfTest.Infrastructure.Service.csproj">
       <Project>{4f819c2b-1847-411b-9ca5-be57829db7ad}</Project>
       <Name>PB.SpiralOfTest.Infrastructure.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.Manager.EmailProvider\PB.SpiralOfTest.Manager.EmailProvider.csproj">
+      <Project>{7a0fda87-0d40-4c0a-8675-58f536450f29}</Project>
+      <Name>PB.SpiralOfTest.Manager.EmailProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\PB.SpiralOfTest.Manager.Party\PB.SpiralOfTest.Manager.Party.csproj">
       <Project>{e781c786-ab4e-447e-9ac0-0e6ac30604bd}</Project>

@@ -49,7 +49,7 @@ namespace PB.SpiralOfTest.Infrastructure.Host
 
         //protected virtual void ApplyConfigOverriddenEndpoints();
 
-        protected static string EnforceEndpointName(Type interfaceType)
+        protected virtual string EnforceEndpointName(Type interfaceType)
         {
             return interfaceType.FullName.Replace("Contract", "Service");
         }

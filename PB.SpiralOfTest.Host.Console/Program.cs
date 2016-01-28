@@ -3,6 +3,7 @@ using System.ServiceModel;
 using PB.SpiralOfTest.Manager.Party;
 using System.Configuration;
 using PB.SpiralOfTest.Infrastructure.Host;
+using PB.SpiralOfTest.Manager.EmailProvider;
 
 namespace PB.SpiralOfTest.Host.Console
 {
@@ -15,20 +16,20 @@ namespace PB.SpiralOfTest.Host.Console
             System.Console.Title = m_ThisName;
             System.Console.WriteLine("Service Host for the PartyManager");
 
-            //ServiceBusServiceHost serviceBusHost = null;
-            //var serviceBusConnectionString = "Endpoint=sb://tmgolfservicestest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=H+5QrmleFKcx5/XhlI/XNcF0d3GCGDHM7UMyge3lNI0="; 
-            //try
-            //{
-            //    serviceBusHost = new ServiceBusServiceHost(typeof(PartyManager), serviceBusConnectionString);
-            //    serviceBusHost.Open();
-            //    System.Console.WriteLine("{0}.Main():  ServiceBusHost opened OK.", m_ThisName);
+            ServiceBusServiceHost serviceBusHost = null;
+            var serviceBusConnectionString = "Endpoint=sb://sv16test2.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ierC00HcBBmyHE22NIBZw9t2otXsRD9/QW0K55Iknvg=";
+            try
+            {
+                serviceBusHost = new ServiceBusServiceHost(typeof(EmailProviderManager), serviceBusConnectionString);
+                serviceBusHost.Open();
+                System.Console.WriteLine("{0}.Main():  ServiceBusHost opened OK.", m_ThisName);
 
-            //    // more services
-            //}
-            //catch (Exception ex)
-            //{
-            //    System.Console.WriteLine("{0}.Main():  host.Open() Threw exception!\n     {1}", m_ThisName, ex);
-            //}
+                // more services
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("{0}.Main():  host.Open() Threw exception!\n     {1}", m_ThisName, ex);
+            }
 
             IntranetServiceHost partyHost = null;
             var hostName = ConfigurationManager.AppSettings["HostName"];
@@ -46,6 +47,7 @@ namespace PB.SpiralOfTest.Host.Console
             }
             System.Console.WriteLine("\n{0}.Main():  Press ENTER to EXIT.", m_ThisName);
             System.Console.ReadLine();
+            CloseOrAbortHost(serviceBusHost);
             CloseOrAbortHost(partyHost);
             System.Console.WriteLine("\n{0}.Main(): Exiting......", m_ThisName);
 
