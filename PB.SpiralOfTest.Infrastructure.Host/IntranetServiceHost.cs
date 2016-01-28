@@ -1,31 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Host
 {
-    // T is the manager type - it can implement several service contracts
-    public class IntranetServiceHost<T> : CustomServiceHostBase
+    // ServiceType is the manager type - it can implement several service contracts
+    public class IntranetServiceHost : CustomServiceHostBase
     {
-        public IntranetServiceHost() 
-            : base(typeof(T), GetBaseAddresses())
+        public IntranetServiceHost(Type serviceType, string hostName) 
+            : base(serviceType, GetBaseAddresses(hostName))
         {
         }
 
-        private static Uri[] GetBaseAddresses()
+        private static Uri[] GetBaseAddresses(string hostName)
         {
-            var baseAddress = ConfigurationManager.AppSettings["BaseAddress"];
-
             // Remove schema if present
-            var index = baseAddress.IndexOf("//");
+            var index = hostName.IndexOf("//");
             if (index != -1)
             {
-                baseAddress = baseAddress.Substring(index + 2);
+                hostName = hostName.Substring(index + 2);
             }
-            baseAddress = "net.tcp://" + baseAddress;
-            var uriBuilder = new UriBuilder(baseAddress);
+            hostName = "net.tcp://" + hostName;
+            var uriBuilder = new UriBuilder(hostName);
             return new Uri[] { uriBuilder.Uri };
         }
 
@@ -39,9 +36,7 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         {
             if (!Description.Endpoints.Any(e => e.Binding is NetTcpBinding))
             {
-                //var baseAddress = ConfigurationManager.AppSettings["BaseAddress"];
-                //var endpointAddress = new EndpointAddress(baseAddress);
-                var baseAddress = BaseAddresses.First().AbsoluteUri;
+                var baseAddress = BaseAddresses.First();
                 
                 foreach (var contractType in GetContracts())
                 {
@@ -54,20 +49,13 @@ namespace PB.SpiralOfTest.Infrastructure.Host
 
         protected override IEnumerable<Type> GetContracts()
         {
-            // TODO: Find all contracts implemented by the manager of type T
-            return typeof(T).GetInterfaces(); 
+            // TODO: Find all contracts implemented by the manager of type T - Contracts with "Intranet" service attribute
+            return Description.ServiceType.GetInterfaces(); 
         }
 
         // TODO: Move this logic to a helper class - so that it can be shared with the proxy base class
-        protected Uri CreateAddress(string baseAddress, string endpointName)
+        protected Uri CreateAddress(Uri baseAddress, string endpointName)
         {
-            // Remove schema if present
-            var index = baseAddress.IndexOf("//");
-            if (index != -1)
-            {
-                baseAddress = baseAddress.Substring(index + 2);
-            }
-            baseAddress = "net.tcp://" + baseAddress;
             var uriBuilder = new UriBuilder(baseAddress);
             uriBuilder.Path += endpointName;
             return uriBuilder.Uri;
@@ -76,10 +64,11 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         private NetTcpBinding DefaultIntranetBinding()
         {
             // TODO: This binding can be moved to a BindingHelper class to ensure that the server and client is using the same binding
-            var binding = new NetTcpBinding();
-            binding.TransactionFlow = true;
-            binding.ReliableSession.Enabled = true;
-            return binding;
+            return new NetTcpBinding
+            {
+                TransactionFlow = true,
+                ReliableSession = {Enabled = true}
+            };
         }
 
         #region Intranet BindingHelper stuff 

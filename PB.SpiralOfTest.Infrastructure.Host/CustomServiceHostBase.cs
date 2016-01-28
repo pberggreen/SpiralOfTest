@@ -6,9 +6,10 @@ namespace PB.SpiralOfTest.Infrastructure.Host
 {
     public abstract class CustomServiceHostBase : ServiceHost
     {
-        public CustomServiceHostBase(Type serviceType, params Uri[] baseAddresses)
+        protected CustomServiceHostBase(Type serviceType, params Uri[] baseAddresses)
             : base(serviceType, baseAddresses)
-        { }
+        {
+        }
 
         //protected virtual void Host_Closed(object sender, EventArgs a);
 
@@ -18,6 +19,18 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         protected virtual TimeSpan DefaultDebugTimeout => TimeSpan.FromHours(1);
         protected virtual TimeSpan DefaultConnectivityTimeout => TimeSpan.FromMinutes(1);
 
+        protected TimeSpan Timeout
+        {
+            get
+            {
+#if DEBUG
+                return DefaultDebugTimeout;
+#else
+                return DefaultConnectivityTimeout;
+#endif
+            }
+        }
+    
         //protected void LoadConfiguration();
 
         protected override void ApplyConfiguration()
@@ -49,7 +62,7 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         //protected Type GetContract(string name, bool validate = true);
 
         /// <summary>
-        /// Find all contracts of the specific type (eg. intranet)
+        /// Find all contracts implemented by the service
         /// </summary>
         protected abstract IEnumerable<Type> GetContracts();
 

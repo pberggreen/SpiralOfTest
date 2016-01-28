@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 using PB.SpiralOfTest.Manager.Party;
-using ServiceModelEx;
+using System.Configuration;
 using PB.SpiralOfTest.Infrastructure.Host;
 
 namespace PB.SpiralOfTest.Host.Console
@@ -15,10 +15,26 @@ namespace PB.SpiralOfTest.Host.Console
             System.Console.Title = m_ThisName;
             System.Console.WriteLine("Service Host for the PartyManager");
 
-            IntranetServiceHost<PartyManager> partyHost = null;
+            //ServiceBusServiceHost serviceBusHost = null;
+            //var serviceBusConnectionString = "Endpoint=sb://tmgolfservicestest.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=H+5QrmleFKcx5/XhlI/XNcF0d3GCGDHM7UMyge3lNI0="; 
+            //try
+            //{
+            //    serviceBusHost = new ServiceBusServiceHost(typeof(PartyManager), serviceBusConnectionString);
+            //    serviceBusHost.Open();
+            //    System.Console.WriteLine("{0}.Main():  ServiceBusHost opened OK.", m_ThisName);
+
+            //    // more services
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Console.WriteLine("{0}.Main():  host.Open() Threw exception!\n     {1}", m_ThisName, ex);
+            //}
+
+            IntranetServiceHost partyHost = null;
+            var hostName = ConfigurationManager.AppSettings["HostName"];
             try
             {
-                partyHost = new IntranetServiceHost<PartyManager>();
+                partyHost = new IntranetServiceHost(typeof(PartyManager), hostName);
                 partyHost.Open();
                 System.Console.WriteLine("{0}.Main():  Party ServiceHost opened OK.", m_ThisName);
 

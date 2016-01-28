@@ -9,7 +9,7 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
     {
         protected override ChannelFactory<T> CreateFactory(TimeSpan timeout, long messageSize)
         {
-            var baseAddress = ConfigurationManager.AppSettings["BaseAddress"];
+            var baseAddress = ConfigurationManager.AppSettings["HostName"];  // TODO: BaseAddress or HostName ???
             var binding = CreateBinding();
             var address = CreateAddress(baseAddress);
             return new ChannelFactory<T>(binding, address);
