@@ -25,11 +25,11 @@ namespace PB.SpiralOfTest.Infrastructure.Host
             return new Uri[] { uriBuilder.Uri };
         }
 
-        protected override IEnumerable<Type> GetContracts()
-        {
-            // TODO: Find all contracts implemented by the manager of type T - Contracts with "Intranet" service attribute
-            return Description.ServiceType.GetInterfaces();
-        }
+        // TODO: Find all contracts implemented by the manager of type T - Contracts with "ServiceBus" service attribute
+        //protected override IEnumerable<Type> GetContracts()
+        //{
+        //    return Description.ServiceType.GetInterfaces();
+        //}
 
         protected override void ApplyEndpoints()
         {

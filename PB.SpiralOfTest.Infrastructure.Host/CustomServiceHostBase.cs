@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Host
@@ -67,7 +70,28 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         /// <summary>
         /// Find all contracts implemented by the service
         /// </summary>
-        protected abstract IEnumerable<Type> GetContracts();
+        protected virtual IEnumerable<Type> GetContracts()
+        {
+            return GetContracts(typeof (ServiceContractAttribute));
+        }
+
+        /// <summary>
+        /// Find all service contracts implemented by the service with a specific service attribute 
+        /// </summary>
+        protected virtual IEnumerable<Type> GetContracts(Type serviceContractAttributeType)
+        {
+            var interfaces = Description.ServiceType.GetInterfaces();
+
+            var contracts = new List<Type>();
+            foreach (Type type in interfaces)
+            {
+                if (type.GetCustomAttributes(serviceContractAttributeType, false).Any())
+                {
+                    contracts.Add(type);
+                }
+            }
+            return contracts.ToArray();
+        }
 
     }
 }

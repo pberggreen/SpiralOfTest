@@ -47,11 +47,11 @@ namespace PB.SpiralOfTest.Infrastructure.Host
             }
         }
 
-        protected override IEnumerable<Type> GetContracts()
-        {
-            // TODO: Find all contracts implemented by the manager of type T - Contracts with "Intranet" service attribute
-            return Description.ServiceType.GetInterfaces(); 
-        }
+        // TODO: Find all contracts implemented by the manager of type T - Contracts with "Intranet" service attribute
+        //protected override IEnumerable<Type> GetContracts()
+        //{
+        //    return Description.ServiceType.GetInterfaces(); 
+        //}
 
         // TODO: Move this logic to a helper class - so that it can be shared with the proxy base class
         protected Uri CreateAddress(Uri baseAddress, string endpointName)
