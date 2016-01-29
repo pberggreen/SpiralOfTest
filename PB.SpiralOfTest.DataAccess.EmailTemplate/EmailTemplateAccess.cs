@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.ServiceModel;
-using PB.SpiralOfTest.Common;
+using PB.SpiralOfTest.Infrastructure.ServiceLocator;
 
 namespace PB.SpiralOfTest.Access.EmailTemplate
 {

@@ -45,13 +45,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure.ServiceBase\PB.SpiralOfTest.Infrastructure.Service.csproj">
-      <Project>{4f819c2b-1847-411b-9ca5-be57829db7ad}</Project>
-      <Name>PB.SpiralOfTest.Infrastructure.Service</Name>
-    </ProjectReference>
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure\PB.SpiralOfTest.Infrastructure.csproj">
+      <Project>{b0dc2a95-4c2f-41be-931b-5be58d07c6c0}</Project>
+      <Name>PB.SpiralOfTest.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

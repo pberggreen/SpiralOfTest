@@ -48,10 +48,13 @@
       <Project>{f53b0ff9-e7c4-4946-b202-3473b20f8e71}</Project>
       <Name>PB.SpiralOfTest.Contract.EmailProvider</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure.Proxy\PB.SpiralOfTest.Infrastructure.Proxy.csproj">
-      <Project>{36c1e69b-1466-4daf-b9d0-04d3f0a7b8f5}</Project>
-      <Name>PB.SpiralOfTest.Infrastructure.Proxy</Name>
+    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure\PB.SpiralOfTest.Infrastructure.csproj">
+      <Project>{b0dc2a95-4c2f-41be-931b-5be58d07c6c0}</Project>
+      <Name>PB.SpiralOfTest.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

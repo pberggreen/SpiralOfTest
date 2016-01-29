@@ -1,10 +1,10 @@
 ﻿using System;
 using PB.SpiralOfTest.Access.Guest;
-using PB.SpiralOfTest.Common;
 using PB.SpiralOfTest.Engine.EmailSender;
 using PB.SpiralOfTest.Infrastructure.Service;
 using PB.SpiralOfTest.Contract.Party;
 using System.Diagnostics;
+using PB.SpiralOfTest.Infrastructure.ServiceLocator;
 
 namespace PB.SpiralOfTest.Manager.Party
 {

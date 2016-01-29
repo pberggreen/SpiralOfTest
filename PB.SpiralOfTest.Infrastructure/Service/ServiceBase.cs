@@ -1,5 +1,4 @@
-﻿using System;
-using PB.SpiralOfTest.Common;
+﻿using PB.SpiralOfTest.Infrastructure.ServiceLocator;
 
 namespace PB.SpiralOfTest.Infrastructure.Service
 {

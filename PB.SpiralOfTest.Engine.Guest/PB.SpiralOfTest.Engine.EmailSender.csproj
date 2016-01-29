@@ -53,9 +53,9 @@
       <Project>{9f527ee4-1790-4f62-aee7-4113383b6701}</Project>
       <Name>PB.SpiralOfTest.Access.EmailTemplate</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure.ServiceBase\PB.SpiralOfTest.Infrastructure.Service.csproj">
-      <Project>{4f819c2b-1847-411b-9ca5-be57829db7ad}</Project>
-      <Name>PB.SpiralOfTest.Infrastructure.Service</Name>
+    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure\PB.SpiralOfTest.Infrastructure.csproj">
+      <Project>{b0dc2a95-4c2f-41be-931b-5be58d07c6c0}</Project>
+      <Name>PB.SpiralOfTest.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

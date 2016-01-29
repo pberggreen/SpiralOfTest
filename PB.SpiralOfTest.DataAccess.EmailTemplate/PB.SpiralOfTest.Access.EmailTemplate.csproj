@@ -45,9 +45,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PB.SpiralOfTest.Common\PB.SpiralOfTest.Common.csproj">
-      <Project>{e2e2a00e-233f-4cb2-9b5c-48f8fdb5d324}</Project>
-      <Name>PB.SpiralOfTest.Common</Name>
+    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure\PB.SpiralOfTest.Infrastructure.csproj">
+      <Project>{b0dc2a95-4c2f-41be-931b-5be58d07c6c0}</Project>
+      <Name>PB.SpiralOfTest.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

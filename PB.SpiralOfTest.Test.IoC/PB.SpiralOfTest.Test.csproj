@@ -62,9 +62,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PB.SpiralOfTest.Common\PB.SpiralOfTest.Common.csproj">
-      <Project>{e2e2a00e-233f-4cb2-9b5c-48f8fdb5d324}</Project>
-      <Name>PB.SpiralOfTest.Common</Name>
+    <ProjectReference Include="..\PB.SpiralOfTest.Contract.EmailProvider\PB.SpiralOfTest.Contract.EmailProvider.csproj">
+      <Project>{f53b0ff9-e7c4-4946-b202-3473b20f8e71}</Project>
+      <Name>PB.SpiralOfTest.Contract.EmailProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\PB.SpiralOfTest.Contract.Party\PB.SpiralOfTest.Contract.Party.csproj">
       <Project>{52639c58-003b-41d0-9c43-9a801f8d4e83}</Project>
@@ -86,9 +86,9 @@
       <Project>{c831beab-fdd6-43a7-b0ec-77ea3d0e8451}</Project>
       <Name>PB.SpiralOfTest.Engine.EmailSender</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure.ServiceBase\PB.SpiralOfTest.Infrastructure.Service.csproj">
-      <Project>{4f819c2b-1847-411b-9ca5-be57829db7ad}</Project>
-      <Name>PB.SpiralOfTest.Infrastructure.Service</Name>
+    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure\PB.SpiralOfTest.Infrastructure.csproj">
+      <Project>{b0dc2a95-4c2f-41be-931b-5be58d07c6c0}</Project>
+      <Name>PB.SpiralOfTest.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\PB.SpiralOfTest.Manager.Party\PB.SpiralOfTest.Manager.Party.csproj">
       <Project>{e781c786-ab4e-447e-9ac0-0e6ac30604bd}</Project>

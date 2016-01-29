@@ -48,6 +48,10 @@
       <Project>{F53B0FF9-E7C4-4946-B202-3473B20F8E71}</Project>
       <Name>PB.SpiralOfTest.Contract.EmailProvider</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PB.SpiralOfTest.Infrastructure\PB.SpiralOfTest.Infrastructure.csproj">
+      <Project>{b0dc2a95-4c2f-41be-931b-5be58d07c6c0}</Project>
+      <Name>PB.SpiralOfTest.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

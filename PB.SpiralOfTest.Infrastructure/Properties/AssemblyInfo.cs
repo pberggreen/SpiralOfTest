@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PB.SpiralOfTest.Infrastructure.Service")]
+[assembly: AssemblyTitle("PB.SpiralOfTest.Infrastructure")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PB.SpiralOfTest.Infrastructure.Service")]
+[assembly: AssemblyProduct("PB.SpiralOfTest.Infrastructure")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4f819c2b-1847-411b-9ca5-be57829db7ad")]
+[assembly: Guid("b0dc2a95-4c2f-41be-931b-5be58d07c6c0")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using PB.SpiralOfTest.Common;
 using ServiceModelEx;
+using PB.SpiralOfTest.Infrastructure.ServiceLocator;
 
 namespace PB.SpiralOfTest.Infrastructure.Service
 {
@@ -27,7 +27,7 @@ namespace PB.SpiralOfTest.Infrastructure.Service
             _genericInProcFactoryDef = typeof(InProcFactory).GetMethod("CreateInstance", Type.EmptyTypes).GetGenericMethodDefinition();
         }
         public T CreateService()
-        {
+       { 
             var poco = IoC.Resolve<T>();
             //if (IoC.IsInstanceRegistered<T>())
             //{

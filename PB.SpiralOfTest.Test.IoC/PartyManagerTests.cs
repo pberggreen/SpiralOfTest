@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PB.SpiralOfTest.Access.EmailProvider;
 using PB.SpiralOfTest.Access.EmailTemplate;
-using PB.SpiralOfTest.Access.Guest;
-using PB.SpiralOfTest.Common;
-using PB.SpiralOfTest.Engine.EmailSender;
-using PB.SpiralOfTest.Infrastructure.Service;
+using PB.SpiralOfTest.Infrastructure.ServiceLocator;
 using PB.SpiralOfTest.Manager.Party;
 using PB.SpiralOfTest.Contract.Party;
 
@@ -21,11 +15,11 @@ namespace PB.SpiralOfTest.Test
     {
         public PartyManagerTests()
         {
-            Common.IoC.RegisterType<IPartyManager, PartyManager>();
-            //Common.IoC.RegisterType<IEmailSenderEngine, EmailSenderEngine>();
-            //Common.IoC.RegisterType<IGuestAccess, GuestAccess>();
-            Common.IoC.RegisterType<IEmailProviderAccess, EmailProviderAccess>();
-            Common.IoC.RegisterType<IEmailTemplateAccess, EmailTemplateAccess>();
+            IoC.RegisterType<IPartyManager, PartyManager>();
+            //IoC.RegisterType<IEmailSenderEngine, EmailSenderEngine>();
+            //IoC.RegisterType<IGuestAccess, GuestAccess>();
+            IoC.RegisterType<IEmailProviderAccess, EmailProviderAccess>();
+            IoC.RegisterType<IEmailTemplateAccess, EmailTemplateAccess>();
         }
 
         private TestContext testContextInstance;
@@ -91,21 +85,21 @@ namespace PB.SpiralOfTest.Test
 
         //    var guestAccessMock = new Mock<IGuestAccess>();
         //    guestAccessMock.Setup(m => m.GetGuests(partyId)).Returns(guests);
-        //    //Common.IoC.RegisterInstance<IGuestAccess>(guestAccessMock.Object);
+        //    //IoC.RegisterInstance<IGuestAccess>(guestAccessMock.Object);
         //    var guestAccessServiceFactoryMock = new Mock<IServiceFactory<IGuestAccess>>();
         //    guestAccessServiceFactoryMock.Setup(m => m.CreateService()).Returns(guestAccessMock.Object);
-        //    Common.IoC.RegisterInstance<IServiceFactory<IGuestAccess>>(guestAccessServiceFactoryMock.Object);
+        //    IoC.RegisterInstance<IServiceFactory<IGuestAccess>>(guestAccessServiceFactoryMock.Object);
 
         //    //var emailTemplateAccessMock = new Mock<IEmailTemplateAccess>();
         //    //emailTemplateAccessMock.Setup(m => m.GetEmailTemplate(templateName)).Returns(emailTemplate);
-        //    //Common.IoC.RegisterInstance<IEmailTemplateAccess>(emailTemplateAccessMock.Object);
+        //    //IoC.RegisterInstance<IEmailTemplateAccess>(emailTemplateAccessMock.Object);
 
         //    //var emailEngineMock = new Mock<IEmailSenderEngine>();
         //    //emailEngineMock.Setup(m => m.SendEmail(templateName, guest1Email));
-        //    //Common.IoC.RegisterInstance<IEmailSenderEngine>(emailEngineMock.Object);
+        //    //IoC.RegisterInstance<IEmailSenderEngine>(emailEngineMock.Object);
 
-        //    //Common.IoC.RegisterType<IServiceFactory<IEmailTemplateAccess>, PocoServiceFactory<IEmailTemplateAccess>>();
-        //    Common.IoC.RegisterType<IServiceFactory<IEmailSenderEngine>, InProcServiceFactory<IEmailSenderEngine>>();
+        //    //IoC.RegisterType<IServiceFactory<IEmailTemplateAccess>, PocoServiceFactory<IEmailTemplateAccess>>();
+        //    IoC.RegisterType<IServiceFactory<IEmailSenderEngine>, InProcServiceFactory<IEmailSenderEngine>>();
         //    var partyManager = ServiceBase.GetProxy<IPartyManager>();
         //    FeatureContext.Current = new GoldContext();
         //    partyManager.SendInvitations(templateName, partyId);

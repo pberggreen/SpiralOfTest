@@ -1,6 +1,5 @@
 ﻿using Microsoft.ServiceBus.Messaging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Description;
 using Microsoft.ServiceBus;
@@ -9,7 +8,7 @@ namespace PB.SpiralOfTest.Infrastructure.Host
 {
     public class ServiceBusServiceHost : CustomServiceHostBase
     {
-        private static string _serviceBusConnectionString;  // TODO: Bør ikke være static. Se nedenstående hønen pg ægget problem
+        private static string _serviceBusConnectionString;  // TODO: Bør ikke være static. Se nedenstående hønen og ægget problem
 
         public ServiceBusServiceHost(Type serviceType, string serviceBusConnectionString) 
             : base(serviceType, GetBaseAddresses(serviceBusConnectionString))  // TODO: Hønen og ægget problem: Denne constructor kalder ultimativt AddEndpointBehavior, som har brug for serviceBusConnectionString, som stadig er null :-(
