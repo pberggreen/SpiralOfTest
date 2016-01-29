@@ -29,10 +29,10 @@ namespace PB.SpiralOfTest.Infrastructure.Service
         public T CreateService()
         {
             var poco = IoC.Resolve<T>();
-            if (IoC.IsInstanceRegistered<T>())
-            {
-                return poco; 
-            }
+            //if (IoC.IsInstanceRegistered<T>())
+            //{
+            //    return poco; 
+            //}
 
             // Create InProc service
             var serviceType = poco.GetType();
