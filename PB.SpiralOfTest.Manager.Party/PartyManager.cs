@@ -8,6 +8,7 @@ using PB.SpiralOfTest.Infrastructure.ServiceLocator;
 
 namespace PB.SpiralOfTest.Manager.Party
 {
+    [IntranetServiceBehavior]
     public class PartyManager : ServiceBase, IPartyManager
     {
         static PartyManager()

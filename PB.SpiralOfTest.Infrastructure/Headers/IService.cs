@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PB.SpiralOfTest.Infrastructure.Service
+namespace PB.SpiralOfTest.Infrastructure.Headers
 {
     public interface IService : IDisposable
     {

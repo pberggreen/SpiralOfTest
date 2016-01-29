@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PB.SpiralOfTest.Infrastructure.Service;
+using System;
 using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Contract.Party

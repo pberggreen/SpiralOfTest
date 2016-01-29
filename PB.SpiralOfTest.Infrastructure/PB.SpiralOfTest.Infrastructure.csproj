@@ -71,6 +71,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Headers\Header.cs" />
+    <Compile Include="Helpers\HeaderHelpers.cs" />
+    <Compile Include="Headers\IService.cs" />
+    <Compile Include="Headers\ProxyHeaderInterceptor.cs" />
+    <Compile Include="Headers\ServiceHeaderInterceptor.cs" />
+    <Compile Include="Headers\SessionContext.cs" />
     <Compile Include="Helpers\BindingHelper.cs" />
     <Compile Include="Host\CustomServiceHostBase.cs" />
     <Compile Include="Host\IntranetServiceHost.cs" />
@@ -85,10 +91,10 @@
     <Compile Include="Service\CustomServiceBehaviorAttribute.cs" />
     <Compile Include="Service\IntranetOperationBehaviorAttribute.cs" />
     <Compile Include="Service\IntranetServiceBehaviorAttribute.cs" />
-    <Compile Include="Service\IService.cs" />
     <Compile Include="Service\ServiceBase.cs" />
+    <Compile Include="Service\ServiceBusOperationBehaviorAttribute.cs" />
+    <Compile Include="Service\ServiceBusServiceBehaviorAttribute.cs" />
     <Compile Include="Service\ServiceFactory.cs" />
-    <Compile Include="Service\SessionContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

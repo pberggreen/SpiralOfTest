@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace PB.SpiralOfTest.Infrastructure.Service
+namespace PB.SpiralOfTest.Infrastructure.Headers
 {
     [DataContract]
     public class SessionContext
     {
         [DataMember]
-        public Guid SessionId { get; set; }
+        Guid SessionId { get; set; }
     }
-
 }
