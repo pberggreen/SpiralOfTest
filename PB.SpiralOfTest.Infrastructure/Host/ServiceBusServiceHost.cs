@@ -24,10 +24,9 @@ namespace PB.SpiralOfTest.Infrastructure.Host
             return new Uri[] { uriBuilder.Uri };
         }
 
-        // TODO: Find all contracts implemented by the manager of type T - Contracts with "ServiceBus" service attribute
         //protected override IEnumerable<Type> GetContracts()
         //{
-        //    return Description.ServiceType.GetInterfaces();
+        //    return GetContracts(typeof(ServiceBusServiceBehaviorAttribute));   // Wrong: ServiceBusServiceBehaviorAttribute is applied to the server class - not the interface
         //}
 
         protected override void ApplyEndpoints()

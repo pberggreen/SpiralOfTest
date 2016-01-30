@@ -1,4 +1,5 @@
-﻿using PB.SpiralOfTest.Infrastructure.ServiceLocator;
+﻿using PB.SpiralOfTest.Infrastructure.Headers;
+using PB.SpiralOfTest.Infrastructure.ServiceLocator;
 
 namespace PB.SpiralOfTest.Infrastructure.Service
 {
@@ -19,13 +20,22 @@ namespace PB.SpiralOfTest.Infrastructure.Service
             //    IoC.RegisterType<IServiceFactory, InProcServiceFactory>();
         }
 
-        //public SessionContext Session
-        //{
-        //    get
-        //    {
-        //        return Header<SessionContext>.GetIncoming(); 
-        //    }
-        //}
+        //TODO: Check if this is works
+        public SessionContext Session
+        {
+            get
+            {
+                return Header<SessionContext>.GetIncoming();
+            }
+        }
+
+        public TraceContext Trace
+        {
+            get
+            {
+                return Header<TraceContext>.GetIncoming();
+            }
+        }
 
         public static T GetProxy<T>() where T : class
         {

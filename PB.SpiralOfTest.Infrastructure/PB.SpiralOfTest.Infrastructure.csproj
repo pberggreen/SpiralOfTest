@@ -72,12 +72,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Headers\Header.cs" />
+    <Compile Include="Headers\TraceContext.cs" />
     <Compile Include="Helpers\HeaderHelpers.cs" />
     <Compile Include="Headers\IService.cs" />
     <Compile Include="Headers\ProxyHeaderInterceptor.cs" />
     <Compile Include="Headers\ServiceHeaderInterceptor.cs" />
     <Compile Include="Headers\SessionContext.cs" />
-    <Compile Include="Helpers\BindingHelper.cs" />
+    <Compile Include="Helpers\BindingHelpers.cs" />
     <Compile Include="Host\CustomServiceHostBase.cs" />
     <Compile Include="Host\IntranetServiceHost.cs" />
     <Compile Include="Host\ServiceBusServiceHost.cs" />

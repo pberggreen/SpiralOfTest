@@ -7,9 +7,14 @@ namespace PB.SpiralOfTest.Infrastructure.Helpers
 {
     public static class HeaderHelpers
     {
+        /// <summary>
+        /// Add all common headers 
+        /// </summary>
+        /// <param name="destination"></param>
         internal static void AddCommonHeaders(MessageHeaders destination)
         {
-            //Header<SessionContext>.Add(new SessionContext(), destination);  // TODO: Find out what to do here
+            Header<SessionContext>.Add(new SessionContext(), destination);
+            Header<TraceContext>.Add(new TraceContext(), destination);
             // Add more contexts here
         }
 
@@ -19,6 +24,7 @@ namespace PB.SpiralOfTest.Infrastructure.Helpers
                 throw new InvalidOperationException("No current OperationContext");
 
             Header<SessionContext>.CopyHeaderTo(destination);
+            Header<TraceContext>.CopyHeaderTo(destination);
             // Add more contexts here
         }
 
@@ -28,12 +34,13 @@ namespace PB.SpiralOfTest.Infrastructure.Helpers
                 throw new InvalidOperationException("No current OperationContext");
 
             Header<SessionContext>.CopyHeaderFrom(destination);
+            Header<TraceContext>.CopyHeaderFrom(destination);
             // Add more contexts here
         }
 
         internal static bool CanCopyHeaders()
         {
-            throw new NotImplementedException();
+            return OperationContext.Current != null;
         }
     }
 }

@@ -23,6 +23,8 @@ namespace PB.SpiralOfTest.Manager.Party
         public void SendInvitations(string templateName, Guid partyId)
         {
             Debug.WriteLine("PartyManager.SendInvitations");
+            //var seqNumber = Trace.SequenceNumber;
+            //var sessionId = Session.SessionId;
 
             var guestAccess = GetProxy<IGuestAccess>();
             var guests = guestAccess.GetGuests(partyId);

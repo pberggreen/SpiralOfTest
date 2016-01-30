@@ -4,6 +4,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using PB.SpiralOfTest.Infrastructure.Helpers;
 
 namespace PB.SpiralOfTest.Infrastructure.Proxy
 {
@@ -22,7 +23,7 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             QueueName = queueName;
         }
 
-        protected override ChannelFactory<T> CreateFactory(TimeSpan timeout, long messageSize)
+        protected override ChannelFactory<T> CreateFactory(TimeSpan timeout, long maxMessageSize)
         {
             var connectionStringParts = ServiceBusConnectionString.Split(';');
             var endpoint =
@@ -32,8 +33,8 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             var sharedAccessKey =
                 connectionStringParts[2].Substring(connectionStringParts[2].IndexOf("=", StringComparison.Ordinal) + 1);
 
-            var address = CreateAddress(endpoint);
-            var binding = CreateBinding();
+            var address = new EndpointAddress(BindingHelpers.CreateAddress(new Uri(endpoint), QueueName));
+            var binding = BindingHelpers.ServiceBus.Binding(DefaultMaxMessageSize, DefaultTimeout, DebugTimeout);
 
             var channelFactory = new ChannelFactory<T>(binding, address);
             var endpointBehavior = new TransportClientEndpointBehavior
@@ -43,23 +44,6 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             };
             channelFactory.Endpoint.Behaviors.Add(endpointBehavior);
             return channelFactory;
-        }
-
-        protected override EndpointAddress CreateAddress(string baseAddress)
-        {
-            return new EndpointAddress(Path.Combine(baseAddress, QueueName));
-        }
-
-        protected override Binding CreateBinding()
-        {
-            return new NetMessagingBinding
-            {
-                OpenTimeout = DefaultTimeout,
-                CloseTimeout = DefaultTimeout,
-                SendTimeout = DefaultTimeout,
-                ReceiveTimeout = DefaultTimeout,
-                TransportSettings = { BatchFlushInterval = TimeSpan.FromSeconds(1) }
-            };
         }
 
     }

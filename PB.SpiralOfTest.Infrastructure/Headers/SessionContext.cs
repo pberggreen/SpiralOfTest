@@ -7,6 +7,6 @@ namespace PB.SpiralOfTest.Infrastructure.Headers
     public class SessionContext
     {
         [DataMember]
-        Guid SessionId { get; set; }
+        public Guid SessionId { get; internal set; }
     }
 }

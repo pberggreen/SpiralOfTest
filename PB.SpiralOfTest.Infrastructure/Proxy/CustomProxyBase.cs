@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 
 namespace PB.SpiralOfTest.Infrastructure.Proxy
 {
@@ -12,11 +11,11 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         protected virtual long DefaultMaxMessageSize => 65536;
 
-        protected abstract ChannelFactory<T> CreateFactory(TimeSpan timeout, long messageSize);
+        protected abstract ChannelFactory<T> CreateFactory(TimeSpan timeout, long maxMessageSize);
 
-        protected abstract EndpointAddress CreateAddress(string baseAddress);
+        //protected abstract EndpointAddress CreateAddress(string baseAddress);
 
-        protected abstract Binding CreateBinding();
+        //protected abstract Binding CreateBinding();
 
         protected virtual string EnforceEndpointName
         {
