@@ -82,6 +82,7 @@
     <Compile Include="Host\CustomServiceHostBase.cs" />
     <Compile Include="Host\IntranetServiceHost.cs" />
     <Compile Include="Host\ServiceBusServiceHost.cs" />
+    <Compile Include="Proxy\IProxy.cs" />
     <Compile Include="ServiceLocator\FeatureContext.cs" />
     <Compile Include="ServiceLocator\IoC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

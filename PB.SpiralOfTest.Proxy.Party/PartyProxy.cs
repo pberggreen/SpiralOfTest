@@ -5,8 +5,9 @@ using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Proxy.Party
 {
-    public class PartyProxy: IntranetProxy<IPartyManager>, IPartyManager
+    public class PartyProxy: IntranetProxy<IPartyManager>
     {
+        /*
         private IPartyManager Channel { get; set; }
 
         public PartyProxy()
@@ -22,6 +23,6 @@ namespace PB.SpiralOfTest.Proxy.Party
                 channel.SendInvitations(templateName, partyId);
             });
         }
-
+        */
     }
 }

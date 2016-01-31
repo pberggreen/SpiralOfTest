@@ -3,7 +3,7 @@ using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Proxy
 {
-    public abstract class CustomProxyBase<T> where T : class
+    public abstract class CustomProxyBase<T> : IProxy<T> where T : class
     {
         protected virtual TimeSpan DefaultTimeout => TimeSpan.FromMinutes(1);
 
@@ -37,34 +37,42 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             }
         }
 
-        private ChannelFactory<T> _channelFactory;
+        public T Channel { get; private set; }
 
-        public ChannelFactory<T> ChannelFactory
+        public CustomProxyBase()
         {
-            get
-            {
-                if (_channelFactory == null)
-                {
-                    _channelFactory = CreateFactory(DefaultTimeout, DefaultMaxMessageSize);
-                }
-                return _channelFactory;
-            }
+            var channelFactory = CreateFactory(DefaultTimeout, DefaultMaxMessageSize);
+            Channel = channelFactory.CreateChannel();
         }
 
-        // TODO: Perhaps it is not a good idea to create and destroy a channel for each call?
         public void Call(Action<T> action)
         {
-            var channel = ChannelFactory.CreateChannel();
             try
             {
-                action(channel);
+                action(Channel);
             }
-            finally
+            catch (Exception ex)
             {
-                var proxy = channel as ICommunicationObject;
-                proxy?.Close();
+                Abort();
+                throw;
             }
         }
 
+        public void Close()
+        {
+            var proxy = Channel as ICommunicationObject;
+            proxy?.Close();
+        }
+
+        public void Abort()
+        {
+            var proxy = Channel as ICommunicationObject;
+            proxy?.Abort();
+        }
+
+        public void Dispose()
+        {
+            Close();
+        }
     }
 }
