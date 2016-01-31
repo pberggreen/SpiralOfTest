@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LightInject;
 using Microsoft.Practices.Unity;
 
 namespace PB.SpiralOfTest.Infrastructure.ServiceLocator
@@ -15,7 +16,8 @@ namespace PB.SpiralOfTest.Infrastructure.ServiceLocator
     /// </summary>
     public static class IoC
     {
-        private static LightInject.ServiceContainer _container;
+        private static IServiceContainer _container;
+        private static IServiceContainer _initialContainer;
 
         static IoC()
         {
@@ -24,7 +26,7 @@ namespace PB.SpiralOfTest.Infrastructure.ServiceLocator
 
         static void InitializeIoC()
         {
-            _container = new LightInject.ServiceContainer();
+            _container = new ServiceContainer();
 
             //_container.RegisterTypes(
             //    AllClasses.FromLoadedAssemblies(),
@@ -32,6 +34,7 @@ namespace PB.SpiralOfTest.Infrastructure.ServiceLocator
             //    WithName.Default,
             //    WithLifetime.ContainerControlled);
 
+            _initialContainer = _container.Clone();
         }
 
         /// <summary>
@@ -80,19 +83,25 @@ namespace PB.SpiralOfTest.Infrastructure.ServiceLocator
             return instance.GetType();
         }
 
-        public static bool IsInstanceRegistered<T>()
-        {
-            var instance = _container.TryGetInstance<T>();
-            if (instance == null)
-                return false;
+        //public static bool IsInstanceRegistered<T>()
+        //{
+        //    var instance = _container.TryGetInstance<T>();
+        //    if (instance == null)
+        //        return false;
 
-            return instance.GetType() != typeof (T);
-        }
+        //    return instance.GetType() != typeof (T);
+        //}
 
         public static bool IsRegistered<T>()
         {
             return _container.CanGetInstance(typeof(T), "");
         }
+
+        public static void Reset()
+        {
+            _container = _initialContainer.Clone();
+        }
+
 
     }
 }

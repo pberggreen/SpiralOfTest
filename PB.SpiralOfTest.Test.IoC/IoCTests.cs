@@ -16,36 +16,36 @@ namespace PB.SpiralOfTest.Test.IoCTests
             IoC.ResolveType<IGuestAccess>();
         }
 
-        [TestMethod]
-        public void ResolveType_RegisteredType_ReturnsInterface()
-        {
-            IoC.RegisterType<IGuestAccess, GuestAccess>();
-            var instance = IoC.Resolve<IGuestAccess>();
-            var registeredType = IoC.ResolveType<IGuestAccess>();
-            Assert.AreEqual(typeof(GuestAccess), registeredType);
-            Assert.IsFalse(IoC.IsInstanceRegistered<IGuestAccess>());
-        }
+        //[TestMethod]
+        //public void ResolveType_RegisteredType_ReturnsInterface()
+        //{
+        //    IoC.RegisterType<IGuestAccess, GuestAccess>();
+        //    var instance = IoC.Resolve<IGuestAccess>();
+        //    var registeredType = IoC.ResolveType<IGuestAccess>();
+        //    Assert.AreEqual(typeof(GuestAccess), registeredType);
+        //    Assert.IsFalse(IoC.IsInstanceRegistered<IGuestAccess>());
+        //}
 
-        [TestMethod]
-        public void ResolveType_RegisteredInstance_ReturnsTypeOfInstance()
-        {
-            var guestAccess = new GuestAccess();
-            IoC.RegisterInstance<IGuestAccess>(guestAccess);
-            var instance = IoC.Resolve<IGuestAccess>();
-            var registeredType = IoC.ResolveType<IGuestAccess>();
-            Assert.AreEqual(typeof(IGuestAccess), registeredType);
-            Assert.IsTrue(IoC.IsInstanceRegistered<IGuestAccess>());
-        }
+        //[TestMethod]
+        //public void ResolveType_RegisteredInstance_ReturnsTypeOfInstance()
+        //{
+        //    var guestAccess = new GuestAccess();
+        //    IoC.RegisterInstance<IGuestAccess>(guestAccess);
+        //    var instance = IoC.Resolve<IGuestAccess>();
+        //    var registeredType = IoC.ResolveType<IGuestAccess>();
+        //    Assert.AreEqual(typeof(IGuestAccess), registeredType);
+        //    Assert.IsTrue(IoC.IsInstanceRegistered<IGuestAccess>());
+        //}
 
-        [TestMethod]
-        public void ResolveType_RegisteredMoq_ReturnsMoqType()
-        {
-            var guestAccessMock = new Mock<IGuestAccess>();
-            IoC.RegisterInstance<IGuestAccess>(guestAccessMock.Object);
-            var registeredType = IoC.ResolveType<IGuestAccess>();
-            Assert.AreEqual(typeof(IGuestAccess), registeredType);
-            Assert.IsTrue(IoC.IsInstanceRegistered<IGuestAccess>());
-        }
+        //[TestMethod]
+        //public void ResolveType_RegisteredMoq_ReturnsMoqType()
+        //{
+        //    var guestAccessMock = new Mock<IGuestAccess>();
+        //    IoC.RegisterInstance<IGuestAccess>(guestAccessMock.Object);
+        //    var registeredType = IoC.ResolveType<IGuestAccess>();
+        //    Assert.AreEqual(typeof(IGuestAccess), registeredType);
+        //    Assert.IsTrue(IoC.IsInstanceRegistered<IGuestAccess>());
+        //}
 
         [TestMethod]
         public void Resolve_RegisteredMoq_ReturnsMoqType()
@@ -56,5 +56,23 @@ namespace PB.SpiralOfTest.Test.IoCTests
             Assert.AreEqual(typeof(IGuestAccess), instance);
         }
 
+        [TestMethod]
+        public void Reset_NewRegisteredType_IsNotRegisteredAfterReset()
+        {
+            Assert.IsFalse(IoC.IsRegistered<ITest>());
+            IoC.Reset();
+            IoC.RegisterType<ITest, Test>();
+            Assert.IsTrue(IoC.IsRegistered<ITest>());
+            IoC.Reset();
+            Assert.IsFalse(IoC.IsRegistered<ITest>());
+        }
+
     }
+
+    public interface ITest
+    { }
+
+    public class Test : ITest
+    { }
+
 }
