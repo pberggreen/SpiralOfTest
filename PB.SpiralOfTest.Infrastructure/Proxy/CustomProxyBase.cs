@@ -17,6 +17,18 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         //protected abstract Binding CreateBinding();
 
+        protected TimeSpan Timeout
+        {
+            get
+            {
+#if DEBUG
+                return DebugTimeout;
+#else
+                return DefaultTimeout;
+#endif
+            }
+        }
+
         protected virtual string EnforceEndpointName
         {
             get
