@@ -1,4 +1,5 @@
 ﻿using PB.SpiralOfTest.Infrastructure.Headers;
+using PB.SpiralOfTest.Infrastructure.Proxy;
 using PB.SpiralOfTest.Infrastructure.ServiceLocator;
 
 namespace PB.SpiralOfTest.Infrastructure.Service
@@ -44,11 +45,24 @@ namespace PB.SpiralOfTest.Infrastructure.Service
             // Perhaps we should also be able to use the poco.
             //return IoC.Resolve<T>();
 
-            var serviceFactory = IoC.IsRegistered<IServiceFactory<T>>() 
-                ? IoC.Resolve<IServiceFactory<T>>() 
-                : new InProcServiceFactory<T>();
+            //var serviceFactory = IoC.IsRegistered<IServiceFactory<T>>() 
+            //    ? IoC.Resolve<IServiceFactory<T>>() 
+            //    : new InProcServiceFactory<T>();
 
-            return serviceFactory.CreateService();
+            //return serviceFactory.CreateService();
+
+            var proxy = IoC.Resolve<T>();
+            if (proxy is ServiceBase)
+            {
+                // Call InProc
+                // TODO: No need to use the factory
+                return new InProcServiceFactory<T>().CreateService();
+            }
+            else
+            {
+                // Call POCO or mock
+                return proxy;
+            }
         }
 
         //public void Dispose()

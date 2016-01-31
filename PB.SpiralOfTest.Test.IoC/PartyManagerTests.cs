@@ -4,6 +4,13 @@ using PB.SpiralOfTest.Access.EmailTemplate;
 using PB.SpiralOfTest.Infrastructure.ServiceLocator;
 using PB.SpiralOfTest.Manager.Party;
 using PB.SpiralOfTest.Contract.Party;
+using System;
+using System.Collections.Generic;
+using Moq;
+using PB.SpiralOfTest.Access.Guest;
+using PB.SpiralOfTest.Infrastructure.Service;
+using PB.SpiralOfTest.Engine.EmailSender;
+using PB.SpiralOfTest.Infrastructure.Proxy;
 
 namespace PB.SpiralOfTest.Test
 {
@@ -58,52 +65,59 @@ namespace PB.SpiralOfTest.Test
 
         #endregion
 
-        //[TestMethod]
-        //public void SendInvitations()
-        //{
-        //    var partyId = Guid.NewGuid();
-        //    var templateName = "Birthday";
-        //    var guest1Name = "Guest1";
-        //    var guest1Email = "guest1@trackman.test";
+        [TestMethod]
+        public void SendInvitations()
+        {
+            var partyId = Guid.NewGuid();
+            var templateName = "Birthday";
+            var guest1Name = "Guest1";
+            var guest1Email = "guest1@trackman.test";
 
-        //    var guests = new List<Guest>
-        //    {
-        //        new Guest()
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            Name = guest1Name,
-        //            Email = guest1Email
-        //        }
-        //    };
+            var guests = new List<Guest>
+            {
+                new Guest()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = guest1Name,
+                    Email = guest1Email
+                }
+            };
 
-        //    var emailTemplate = new EmailTemplate
-        //    {
-        //        Name = templateName,
-        //        Subject = "Invitation",
-        //        Body = "You're invited to my birthday party"
-        //    };
+            var emailTemplate = new EmailTemplate
+            {
+                Name = templateName,
+                Subject = "Invitation",
+                Body = "You're invited to my birthday party"
+            };
 
-        //    var guestAccessMock = new Mock<IGuestAccess>();
-        //    guestAccessMock.Setup(m => m.GetGuests(partyId)).Returns(guests);
-        //    //IoC.RegisterInstance<IGuestAccess>(guestAccessMock.Object);
-        //    var guestAccessServiceFactoryMock = new Mock<IServiceFactory<IGuestAccess>>();
-        //    guestAccessServiceFactoryMock.Setup(m => m.CreateService()).Returns(guestAccessMock.Object);
-        //    IoC.RegisterInstance<IServiceFactory<IGuestAccess>>(guestAccessServiceFactoryMock.Object);
+            var guestAccessMock = new Mock<IGuestAccess>();
+            guestAccessMock.Setup(m => m.GetGuests(partyId)).Returns(guests);
+            IoC.RegisterInstance<IGuestAccess>(guestAccessMock.Object);
+            //var guestAccessServiceFactoryMock = new Mock<IServiceFactory<IGuestAccess>>();
+            //guestAccessServiceFactoryMock.Setup(m => m.CreateService()).Returns(guestAccessMock.Object);
+            //IoC.RegisterInstance<IServiceFactory<IGuestAccess>>(guestAccessServiceFactoryMock.Object);
 
-        //    //var emailTemplateAccessMock = new Mock<IEmailTemplateAccess>();
-        //    //emailTemplateAccessMock.Setup(m => m.GetEmailTemplate(templateName)).Returns(emailTemplate);
-        //    //IoC.RegisterInstance<IEmailTemplateAccess>(emailTemplateAccessMock.Object);
+            //var emailTemplateAccessMock = new Mock<IEmailTemplateAccess>();
+            //emailTemplateAccessMock.Setup(m => m.GetEmailTemplate(templateName)).Returns(emailTemplate);
+            //IoC.RegisterInstance<IEmailTemplateAccess>(emailTemplateAccessMock.Object);
 
-        //    //var emailEngineMock = new Mock<IEmailSenderEngine>();
-        //    //emailEngineMock.Setup(m => m.SendEmail(templateName, guest1Email));
-        //    //IoC.RegisterInstance<IEmailSenderEngine>(emailEngineMock.Object);
+            //var emailEngineMock = new Mock<IEmailSenderEngine>();
+            //emailEngineMock.Setup(m => m.SendEmail(templateName, guest1Email));
+            //IoC.RegisterInstance<IEmailSenderEngine>(emailEngineMock.Object);
 
-        //    //IoC.RegisterType<IServiceFactory<IEmailTemplateAccess>, PocoServiceFactory<IEmailTemplateAccess>>();
-        //    IoC.RegisterType<IServiceFactory<IEmailSenderEngine>, InProcServiceFactory<IEmailSenderEngine>>();
-        //    var partyManager = ServiceBase.GetProxy<IPartyManager>();
-        //    FeatureContext.Current = new GoldContext();
-        //    partyManager.SendInvitations(templateName, partyId);
-        //}
+            //IoC.RegisterType<IServiceFactory<IEmailTemplateAccess>, PocoServiceFactory<IEmailTemplateAccess>>();
+            //IoC.RegisterType<IServiceFactory<IEmailSenderEngine>, InProcServiceFactory<IEmailSenderEngine>>();
+            IoC.RegisterType<IEmailSenderEngine, EmailSenderEngine>();
+            //var partyManager = ServiceBase.GetProxy<IPartyManager>();
+            using (var partyManager = IoC.Resolve<IProxy<IPartyManager>>())
+            {
+                FeatureContext.Current = new GoldContext();
+                partyManager.Call(proxy =>
+                {
+                    proxy.SendInvitations(templateName, partyId);
+                });
+            }
+        }
 
         [TestMethod]
         public void TextContext()

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 using Microsoft.ServiceBus;
-using Microsoft.ServiceBus.Messaging;
 using PB.SpiralOfTest.Infrastructure.Helpers;
 
 namespace PB.SpiralOfTest.Infrastructure.Proxy

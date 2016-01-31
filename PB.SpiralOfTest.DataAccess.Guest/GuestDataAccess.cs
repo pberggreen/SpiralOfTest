@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PB.SpiralOfTest.Infrastructure.Service;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.ServiceModel;
@@ -12,7 +13,7 @@ namespace PB.SpiralOfTest.Access.Guest
         List<Guest> GetGuests(Guid partyId);
     }
 
-    public class GuestAccess : IGuestAccess
+    public class GuestAccess : ServiceBase, IGuestAccess
     {
         public List<Guest> GetGuests(Guid partyId)
         {
