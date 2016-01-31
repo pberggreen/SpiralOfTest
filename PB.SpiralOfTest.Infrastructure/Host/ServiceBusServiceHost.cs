@@ -10,6 +10,7 @@ namespace PB.SpiralOfTest.Infrastructure.Host
     {
         private static string _serviceBusConnectionString;  // TODO: Bør ikke være static. Se nedenstående hønen og ægget problem
 
+        //TODO: Tilføje mulighed for at tilføje en "environment" tekst til kø-navnet ("Debug") 
         public ServiceBusServiceHost(Type serviceType, string serviceBusConnectionString) 
             : base(serviceType, GetBaseAddresses(serviceBusConnectionString))  // TODO: Hønen og ægget problem: Denne constructor kalder ultimativt AddEndpointBehavior, som har brug for serviceBusConnectionString, som stadig er null :-(
         {

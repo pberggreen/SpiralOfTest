@@ -14,7 +14,7 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         protected string QueueName { get; set; }
 
-        protected ServiceBusProxy(string serviceBusConnectionString, string queueName)
+        protected ServiceBusProxy(string serviceBusConnectionString, string queueName) : base()
         {
             ServiceBusConnectionString = serviceBusConnectionString;
             QueueName = queueName;
@@ -30,7 +30,10 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             var sharedAccessKey =
                 connectionStringParts[2].Substring(connectionStringParts[2].IndexOf("=", StringComparison.Ordinal) + 1);
 
-            var address = new EndpointAddress(BindingHelpers.CreateAddress(new Uri(endpoint), QueueName));
+            var endpointName = EnforceEndpointName;
+            if (!string.IsNullOrEmpty(QueueName))
+                endpointName += "-" + QueueName; 
+            var address = new EndpointAddress(BindingHelpers.CreateAddress(new Uri(endpoint), endpointName));
             var binding = BindingHelpers.ServiceBus.Binding(DefaultMaxMessageSize, DefaultTimeout, DebugTimeout);
 
             var channelFactory = new ChannelFactory<T>(binding, address);
@@ -41,6 +44,14 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             };
             channelFactory.Endpoint.Behaviors.Add(endpointBehavior);
             return channelFactory;
+        }
+
+        protected override string EnforceEndpointName
+        {
+            get
+            {
+                return typeof(T).Name;
+            }
         }
 
     }
