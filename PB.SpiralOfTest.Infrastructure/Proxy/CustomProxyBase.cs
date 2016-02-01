@@ -58,6 +58,27 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             }
         }
 
+        public R Call<R>(Func<T, R> action) 
+        {
+            try
+            {
+                return action(Channel);
+            }
+            finally
+            {
+                var comObj = Channel as ICommunicationObject;
+                try
+                {
+                    if (comObj.State != CommunicationState.Faulted)
+                        comObj.Close();
+                }
+                catch
+                {
+                    comObj.Abort(); 
+                }
+            }
+        }
+
         public void Close()
         {
             var proxy = Channel as ICommunicationObject;
