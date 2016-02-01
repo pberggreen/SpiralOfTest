@@ -3,32 +3,30 @@ using System;
 using System.Linq;
 using System.ServiceModel.Description;
 using Microsoft.ServiceBus;
+using PB.SpiralOfTest.Infrastructure.Helpers;
 
 namespace PB.SpiralOfTest.Infrastructure.Host
 {
     public class ServiceBusServiceHost : CustomServiceHostBase
     {
-        private static string _serviceBusConnectionString;  // TODO: Bør ikke være static. Se nedenstående hønen og ægget problem
+        // TODO: Bør ikke være static. Se nedenstående hønen og ægget problem
+        private static string _serviceBusConnectionString;  
+        private static string _endpointSuffix;
 
-        //TODO: Tilføje mulighed for at tilføje en "environment" tekst til kø-navnet ("Debug") 
-        public ServiceBusServiceHost(Type serviceType, string serviceBusConnectionString) 
-            : base(serviceType, GetBaseAddresses(serviceBusConnectionString))  // TODO: Hønen og ægget problem: Denne constructor kalder ultimativt AddEndpointBehavior, som har brug for serviceBusConnectionString, som stadig er null :-(
+        public ServiceBusServiceHost(Type serviceType, string serviceBusConnectionString, string endpointSuffix = null) 
+            : base(serviceType, GetBaseAddresses(serviceBusConnectionString, endpointSuffix))  // TODO: Hønen og ægget problem: Denne constructor kalder ultimativt AddEndpointBehavior, som har brug for serviceBusConnectionString, som stadig er null :-(
         {
             //_serviceBusConnectionString = serviceBusConnectionString;
         }
 
-        private static Uri[] GetBaseAddresses(string serviceBusConnectionString)
+        private static Uri[] GetBaseAddresses(string serviceBusConnectionString, string endpointSuffix)
         {
             _serviceBusConnectionString = serviceBusConnectionString;  // Hack
+            _endpointSuffix = endpointSuffix;
             var endpoint = GetEndpoint(serviceBusConnectionString);
             var uriBuilder = new UriBuilder(endpoint);
             return new Uri[] { uriBuilder.Uri };
         }
-
-        //protected override IEnumerable<Type> GetContracts()
-        //{
-        //    return GetContracts(typeof(ServiceBusServiceBehaviorAttribute));   // Wrong: ServiceBusServiceBehaviorAttribute is applied to the server class - not the interface
-        //}
 
         protected override void ApplyEndpoints()
         {
@@ -50,8 +48,12 @@ namespace PB.SpiralOfTest.Infrastructure.Host
                 foreach (var contractType in GetContracts())
                 {
                     var endpointName = EnforceEndpointName(contractType);
-                    var address = CreateAddress(baseAddress, endpointName);
-                    var endpoint = AddServiceEndpoint(contractType, DefaultServiceBusBinding(), address);
+                    if (!string.IsNullOrEmpty(_endpointSuffix))
+                        endpointName += "-" + _endpointSuffix;
+                    var address = BindingHelpers.CreateAddress(baseAddress, endpointName);
+                    var binding = BindingHelpers.ServiceBus.Binding(MaxReceiveMessageSize, DefaultConnectivityTimeout,
+                        DefaultDebugTimeout);
+                    var endpoint = AddServiceEndpoint(contractType, binding, address);
                     AddEndpointBehavior(endpoint);
                 }
             }
@@ -66,26 +68,6 @@ namespace PB.SpiralOfTest.Infrastructure.Host
                 TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(accessKeyName, accessKey)
             };
             endpoint.EndpointBehaviors.Add(endpointBehaviour);
-        }
-
-        protected Uri CreateAddress(Uri baseAddress, string endpointName)
-        {
-            var uriBuilder = new UriBuilder(baseAddress);
-            uriBuilder.Path += endpointName;
-            return uriBuilder.Uri;
-        }
-
-        private NetMessagingBinding DefaultServiceBusBinding()
-        {
-            // TODO: This binding can be moved to a BindingHelper class to ensure that the server and client is using the same binding
-            return new NetMessagingBinding
-            {
-                OpenTimeout = Timeout,
-                CloseTimeout = Timeout,
-                SendTimeout = Timeout,
-                ReceiveTimeout = Timeout,
-                TransportSettings = { BatchFlushInterval = TimeSpan.FromSeconds(1) }
-            };
         }
 
         private static string GetEndpoint(string serviceBusConnectionString)

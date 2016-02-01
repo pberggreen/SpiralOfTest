@@ -20,7 +20,7 @@ namespace PB.SpiralOfTest.Host.Console
             var serviceBusConnectionString = "Endpoint=sb://sv16test2.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ierC00HcBBmyHE22NIBZw9t2otXsRD9/QW0K55Iknvg=";
             try
             {
-                serviceBusHost = new ServiceBusServiceHost(typeof(EmailProviderManager), serviceBusConnectionString);
+                serviceBusHost = new ServiceBusServiceHost(typeof(EmailProviderManager), serviceBusConnectionString, "debug");
                 serviceBusHost.Open();
                 AppDomain.CurrentDomain.ProcessExit += serviceBusHost.Host_Closed;
                 System.Console.WriteLine("{0}.Main():  ServiceBusHost opened OK.", m_ThisName);

@@ -26,7 +26,7 @@ namespace PB.SpiralOfTest.Infrastructure.ServiceLocator
 
         static void InitializeIoC()
         {
-            _container = new ServiceContainer();
+            _container = new LightInject.ServiceContainer();
 
             //_container.RegisterTypes(
             //    AllClasses.FromLoadedAssemblies(),

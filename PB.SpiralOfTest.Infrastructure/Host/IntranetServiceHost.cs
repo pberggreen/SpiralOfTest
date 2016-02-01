@@ -5,7 +5,9 @@ using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Host
 {
-    // ServiceType is the manager type - it can implement several service contracts
+    /// <summary>
+    /// Service host for intranet (net.tcp) services
+    /// </summary>
     public class IntranetServiceHost : CustomServiceHostBase
     {
         public IntranetServiceHost(Type serviceType, string hostName) 
@@ -38,11 +40,6 @@ namespace PB.SpiralOfTest.Infrastructure.Host
                 }
             }
         }
-
-        //protected override IEnumerable<Type> GetContracts()
-        //{
-        //    return GetContracts(typeof(IntranetServiceBehaviorAttribute));  // Wrong: ServiceBusServiceBehaviorAttribute is applied to the server class - not the interface
-        //}
 
     }
 }

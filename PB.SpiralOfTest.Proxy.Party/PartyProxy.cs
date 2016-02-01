@@ -7,6 +7,10 @@ namespace PB.SpiralOfTest.Proxy.Party
 {
     public class PartyProxy: IntranetProxy<IPartyManager>
     {
+        public PartyProxy(string hostName) : base(hostName)
+        {
+        }
+
         /*
         private IPartyManager Channel { get; set; }
 
@@ -24,5 +28,6 @@ namespace PB.SpiralOfTest.Proxy.Party
             });
         }
         */
+
     }
 }

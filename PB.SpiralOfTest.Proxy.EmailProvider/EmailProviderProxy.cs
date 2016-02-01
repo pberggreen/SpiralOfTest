@@ -7,8 +7,8 @@ namespace PB.SpiralOfTest.Proxy.EmailProvider
     {
         // TODO: Change ServiceBusProxy to use namespace as queue name instead of using a custom one. Problem: How do we handle the debug queue? Perhaps a helper method that returns another queue name if #debug
 
-        public EmailProviderProxy(string serviceBusConnectionString, string queueName) 
-            : base(serviceBusConnectionString, queueName)
+        public EmailProviderProxy(string serviceBusConnectionString, string endpointSuffix) 
+            : base(serviceBusConnectionString, endpointSuffix)
         {
         }
 

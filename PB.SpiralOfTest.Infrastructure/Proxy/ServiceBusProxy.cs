@@ -6,23 +6,25 @@ using PB.SpiralOfTest.Infrastructure.Helpers;
 namespace PB.SpiralOfTest.Infrastructure.Proxy
 {
     /// <summary>
-    /// Proxy class for calling services via the Azure service bus
+    /// Base class for proxies calling services via the Azure service bus
     /// </summary>
-    public abstract class ServiceBusProxy<T> : CustomProxyBase<T> where T : class
+    public abstract class ServiceBusProxy<TServiceContract> : CustomProxyBase<TServiceContract> where TServiceContract : class
     {
-        protected string ServiceBusConnectionString { get; set; }
+        protected string _serviceBusConnectionString;
 
-        protected string QueueName { get; set; }
+        protected string _endpointSuffix;
 
-        protected ServiceBusProxy(string serviceBusConnectionString, string queueName) : base()
+        protected ServiceBusProxy(string serviceBusConnectionString, string endpointSuffix)
         {
-            ServiceBusConnectionString = serviceBusConnectionString;
-            QueueName = queueName;
+            _serviceBusConnectionString = serviceBusConnectionString;
+            _endpointSuffix = endpointSuffix;
         }
 
-        protected override ChannelFactory<T> CreateFactory(TimeSpan timeout, long maxMessageSize)
+        protected override string EnforceEndpointName => typeof(TServiceContract).Name;
+
+        protected override ChannelFactory<TServiceContract> CreateFactory(TimeSpan timeout, long maxMessageSize)
         {
-            var connectionStringParts = ServiceBusConnectionString.Split(';');
+            var connectionStringParts = _serviceBusConnectionString.Split(';');
             var endpoint =
                 connectionStringParts[0].Substring(connectionStringParts[0].IndexOf("=", StringComparison.Ordinal) + 1);
             var sharedAccessKeyName =
@@ -31,12 +33,12 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
                 connectionStringParts[2].Substring(connectionStringParts[2].IndexOf("=", StringComparison.Ordinal) + 1);
 
             var endpointName = EnforceEndpointName;
-            if (!string.IsNullOrEmpty(QueueName))
-                endpointName += "-" + QueueName; 
+            if (!string.IsNullOrEmpty(_endpointSuffix))
+                endpointName += "-" + _endpointSuffix; 
             var address = new EndpointAddress(BindingHelpers.CreateAddress(new Uri(endpoint), endpointName));
             var binding = BindingHelpers.ServiceBus.Binding(DefaultMaxMessageSize, DefaultTimeout, DebugTimeout);
 
-            var channelFactory = new ChannelFactory<T>(binding, address);
+            var channelFactory = new ChannelFactory<TServiceContract>(binding, address);
             var endpointBehavior = new TransportClientEndpointBehavior
             {
                 TokenProvider =
@@ -44,14 +46,6 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             };
             channelFactory.Endpoint.Behaviors.Add(endpointBehavior);
             return channelFactory;
-        }
-
-        protected override string EnforceEndpointName
-        {
-            get
-            {
-                return typeof(T).Name;
-            }
         }
 
     }

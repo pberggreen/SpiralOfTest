@@ -3,7 +3,10 @@ using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Proxy
 {
-    public abstract class CustomProxyBase<T> : IProxy<T> where T : class
+    /// <summary>
+    /// Base class for all wcf proxy classes. 
+    /// </summary>
+    public abstract class CustomProxyBase<TServiceContract> : IProxy<TServiceContract> where TServiceContract : class
     {
         protected virtual TimeSpan DefaultTimeout => TimeSpan.FromMinutes(1);
 
@@ -11,11 +14,7 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         protected virtual long DefaultMaxMessageSize => 65536;
 
-        protected abstract ChannelFactory<T> CreateFactory(TimeSpan timeout, long maxMessageSize);
-
-        //protected abstract EndpointAddress CreateAddress(string baseAddress);
-
-        //protected abstract Binding CreateBinding();
+        protected abstract ChannelFactory<TServiceContract> CreateFactory(TimeSpan timeout, long maxMessageSize);
 
         protected TimeSpan Timeout
         {
@@ -33,25 +32,25 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
         {
             get
             {
-                return typeof(T).FullName.Replace("Contract", "Service");
+                return typeof(TServiceContract).FullName.Replace("Contract", "Service");
             }
         }
 
-        public T Channel { get; private set; }
+        public TServiceContract Channel { get; private set; }
 
-        public CustomProxyBase()
+        protected CustomProxyBase()
         {
             var channelFactory = CreateFactory(DefaultTimeout, DefaultMaxMessageSize);
             Channel = channelFactory.CreateChannel();
         }
 
-        public void Call(Action<T> action)
+        public void Call(Action<TServiceContract> action)
         {
             try
             {
                 action(Channel);
             }
-            catch (Exception ex)
+            catch
             {
                 Abort();
                 throw;

@@ -49,6 +49,10 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         protected virtual void ApplyEndpoints()
         {
             // TODO: Maybe always add MEX endpoint
+            ////Metadata Exchange
+            //ServiceMetadataBehavior serviceBehavior = new ServiceMetadataBehavior();
+            //serviceBehavior.HttpGetEnabled = true;
+            //studentServiceHost.Description.Behaviors.Add(serviceBehavior);
         }
 
         //protected virtual void ApplyConfigOverriddenEndpoints();

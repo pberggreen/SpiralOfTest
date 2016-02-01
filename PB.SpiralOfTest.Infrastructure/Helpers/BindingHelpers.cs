@@ -4,6 +4,9 @@ using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Helpers
 {
+    /// <summary>
+    /// Helper functions for wcf hosts and proxies
+    /// </summary>
     public static class BindingHelpers
     {
         public static Uri CreateAddress(Uri baseAddress, string endpointName)

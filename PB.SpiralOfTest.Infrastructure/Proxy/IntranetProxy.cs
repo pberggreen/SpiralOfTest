@@ -5,15 +5,24 @@ using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Proxy
 {
-    public class IntranetProxy<T> : CustomProxyBase<T> where T: class
+    /// <summary>
+    /// Base class for proxies to intranet services called via net.tcp
+    /// </summary>
+    public class IntranetProxy<TServiceContract> : CustomProxyBase<TServiceContract> where TServiceContract : class
     {
-        protected override ChannelFactory<T> CreateFactory(TimeSpan timeout, long maxMessageSize)  //TODO: Expose these to the client?
+        private readonly string _hostName;
+
+        protected IntranetProxy(string hostName)
         {
-            var hostName = ConfigurationManager.AppSettings["HostName"];
+            _hostName = hostName;
+        }
+
+        protected override ChannelFactory<TServiceContract> CreateFactory(TimeSpan timeout, long maxMessageSize)
+        {
             var binding = BindingHelpers.Intranet.Binding(maxMessageSize, timeout, DebugTimeout);
-            var baseAddress = BindingHelpers.Intranet.CreateAddress(hostName);
+            var baseAddress = BindingHelpers.Intranet.CreateAddress(_hostName);
             var address = new EndpointAddress(BindingHelpers.CreateAddress(baseAddress, EnforceEndpointName));
-            return new ChannelFactory<T>(binding, address);
+            return new ChannelFactory<TServiceContract>(binding, address);
         }
 
     }
