@@ -11,18 +11,16 @@ namespace PB.SpiralOfTest.Infrastructure.Host
     {
         // TODO: Bør ikke være static. Se nedenstående hønen og ægget problem
         private static string _serviceBusConnectionString;  
-        private static string _endpointSuffix;
 
-        public ServiceBusServiceHost(Type serviceType, string serviceBusConnectionString, string endpointSuffix = null) 
-            : base(serviceType, GetBaseAddresses(serviceBusConnectionString, endpointSuffix))  // TODO: Hønen og ægget problem: Denne constructor kalder ultimativt AddEndpointBehavior, som har brug for serviceBusConnectionString, som stadig er null :-(
+        public ServiceBusServiceHost(Type serviceType, string serviceBusConnectionString) 
+            : base(serviceType, GetBaseAddresses(serviceBusConnectionString))  // TODO: Hønen og ægget problem: Denne constructor kalder ultimativt AddEndpointBehavior, som har brug for serviceBusConnectionString, som stadig er null :-(
         {
             //_serviceBusConnectionString = serviceBusConnectionString;
         }
 
-        private static Uri[] GetBaseAddresses(string serviceBusConnectionString, string endpointSuffix)
+        private static Uri[] GetBaseAddresses(string serviceBusConnectionString)
         {
             _serviceBusConnectionString = serviceBusConnectionString;  // Hack
-            _endpointSuffix = endpointSuffix;
             var endpoint = GetEndpoint(serviceBusConnectionString);
             var uriBuilder = new UriBuilder(endpoint);
             return new Uri[] { uriBuilder.Uri };
@@ -36,7 +34,11 @@ namespace PB.SpiralOfTest.Infrastructure.Host
 
         protected override string EnforceEndpointName(Type interfaceType)
         {
-            return interfaceType.Name;
+            var endpointName = interfaceType.Name;
+#if DEBUG
+            endpointName += "-debug";
+#endif
+            return endpointName;
         }
 
         protected void ApplyServiceBusEndpoints()
@@ -48,8 +50,6 @@ namespace PB.SpiralOfTest.Infrastructure.Host
                 foreach (var contractType in GetContracts())
                 {
                     var endpointName = EnforceEndpointName(contractType);
-                    if (!string.IsNullOrEmpty(_endpointSuffix))
-                        endpointName += "-" + _endpointSuffix;
                     var address = BindingHelpers.CreateAddress(baseAddress, endpointName);
                     var binding = BindingHelpers.ServiceBus.Binding(MaxReceiveMessageSize, DefaultConnectivityTimeout,
                         DefaultDebugTimeout);

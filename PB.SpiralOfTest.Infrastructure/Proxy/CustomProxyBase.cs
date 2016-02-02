@@ -57,37 +57,35 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             }
         }
 
-        public R Call<R>(Func<T, R> action) 
+        public TResponse Call<TResponse>(Func<TServiceContract, TResponse> action)
         {
             try
             {
                 return action(Channel);
             }
-            finally
+            catch
             {
-                var comObj = Channel as ICommunicationObject;
-                try
-                {
-                    if (comObj.State != CommunicationState.Faulted)
-                        comObj.Close();
-                }
-                catch
-                {
-                    comObj.Abort(); 
-                }
+                Abort();
+                throw;
             }
         }
 
         public void Close()
         {
             var proxy = Channel as ICommunicationObject;
-            proxy?.Close();
+            if (proxy != null && proxy.State != CommunicationState.Faulted)
+            {
+                proxy.Close();
+            }
         }
 
         public void Abort()
         {
             var proxy = Channel as ICommunicationObject;
-            proxy?.Abort();
+            if (proxy != null && proxy.State != CommunicationState.Faulted)
+            {
+                proxy.Abort();
+            }
         }
 
         public void Dispose()

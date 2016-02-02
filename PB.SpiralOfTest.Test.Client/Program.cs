@@ -39,8 +39,7 @@ namespace PB.SpiralOfTest.Test.Client
                     Console.WriteLine("Sending email");
                     var serviceBusConnectionString =
                         "Endpoint=sb://sv16test2.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ierC00HcBBmyHE22NIBZw9t2otXsRD9/QW0K55Iknvg=";
-                    var queueName = typeof(IEmailProvider).Name;
-                    var emailProviderProxy = new EmailProviderProxy(serviceBusConnectionString, queueName);
+                    var emailProviderProxy = new EmailProviderProxy(serviceBusConnectionString);
                     emailProviderProxy.SendEmail("peter@sv16.dk", "Test", "This is a test");
                     Console.WriteLine("Email sent");
                 }

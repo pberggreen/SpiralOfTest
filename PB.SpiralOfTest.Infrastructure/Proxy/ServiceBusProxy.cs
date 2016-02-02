@@ -12,15 +12,22 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
     {
         protected string _serviceBusConnectionString;
 
-        protected string _endpointSuffix;
-
-        protected ServiceBusProxy(string serviceBusConnectionString, string endpointSuffix)
+        protected ServiceBusProxy(string serviceBusConnectionString)
         {
             _serviceBusConnectionString = serviceBusConnectionString;
-            _endpointSuffix = endpointSuffix;
         }
 
-        protected override string EnforceEndpointName => typeof(TServiceContract).Name;
+        protected override string EnforceEndpointName
+        {
+            get
+            {
+                var endpointName = typeof(TServiceContract).Name;
+#if DEBUG
+                endpointName += "-debug";
+#endif
+                return endpointName;
+            }
+        }
 
         protected override ChannelFactory<TServiceContract> CreateFactory(TimeSpan timeout, long maxMessageSize)
         {
@@ -33,8 +40,6 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
                 connectionStringParts[2].Substring(connectionStringParts[2].IndexOf("=", StringComparison.Ordinal) + 1);
 
             var endpointName = EnforceEndpointName;
-            if (!string.IsNullOrEmpty(_endpointSuffix))
-                endpointName += "-" + _endpointSuffix; 
             var address = new EndpointAddress(BindingHelpers.CreateAddress(new Uri(endpoint), endpointName));
             var binding = BindingHelpers.ServiceBus.Binding(DefaultMaxMessageSize, DefaultTimeout, DebugTimeout);
 
