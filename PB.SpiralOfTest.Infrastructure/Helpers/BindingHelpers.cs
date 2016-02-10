@@ -1,5 +1,6 @@
 ﻿using Microsoft.ServiceBus.Messaging;
 using System;
+using System.Diagnostics;
 using System.Net.Security;
 using System.ServiceModel;
 
@@ -23,32 +24,30 @@ namespace PB.SpiralOfTest.Infrastructure.Helpers
 
             public static NetTcpBinding Binding(long maxReceivedMessageSize, TimeSpan timeout, TimeSpan debugTimeout)
             {
-                if (_intranetBinding == null)
+                NetTcpBinding intranetBinding;
+                try
                 {
-                    try
-                    {
-                        // Try to create binding from the config file
-                        _intranetBinding = new NetTcpBinding("Intranet");
-                    }
-                    catch
-                    {
-                        _intranetBinding = DefaultBinding();
-                    }
+                    // Try to create binding from the config file
+                    intranetBinding = new NetTcpBinding("Intranet");
+                }
+                catch
+                {
+                    intranetBinding = DefaultBinding();
                 }
 
-                EnforceBindingPolicies(_intranetBinding, maxReceivedMessageSize, timeout, debugTimeout);
+                EnforceBindingPolicies(intranetBinding, maxReceivedMessageSize, timeout, debugTimeout);
 
-                return _intranetBinding;
+                return intranetBinding;
             }
 
             private static void EnforceBindingPolicies(NetTcpBinding binding, long maxReceivedMessageSize, TimeSpan timeout, TimeSpan debugTimeout)
             {
                 binding.MaxReceivedMessageSize = maxReceivedMessageSize;
-#if DEBUG
-                binding.ReceiveTimeout = debugTimeout;
-#else
-            binding.ReceiveTimeout = timeout;
-#endif
+                binding.ReceiveTimeout = timeout;
+                if (Debugger.IsAttached)
+                {
+                    binding.ReceiveTimeout = debugTimeout;
+                }
             }
 
             public static Uri CreateAddress(string hostName)
