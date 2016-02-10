@@ -11,6 +11,10 @@ namespace PB.SpiralOfTest.Infrastructure.Service
     {
         internal Type OperationBehavior;
 
+        public int MaxMessageSize { get; set; }
+
+        public string Timeout { get; set; }
+
         #region IServiceBehavior
 
         public void AddBindingParameters(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase, Collection<ServiceEndpoint> endpoints, BindingParameterCollection bindingParameters)

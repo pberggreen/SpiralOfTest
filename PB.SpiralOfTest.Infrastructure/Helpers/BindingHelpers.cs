@@ -20,7 +20,7 @@ namespace PB.SpiralOfTest.Infrastructure.Helpers
         {
             static NetTcpBinding _intranetBinding;
 
-            public static NetTcpBinding Binding(long maxReceivedMessageSize, TimeSpan timeout, TimeSpan debugTimeout)
+            public static NetTcpBinding Binding(long maxReceivedMessageSize, TimeSpan timeout)
             {
                 if (_intranetBinding == null)
                 {
@@ -35,19 +35,15 @@ namespace PB.SpiralOfTest.Infrastructure.Helpers
                     }
                 }
 
-                EnforceBindingPolicies(_intranetBinding, maxReceivedMessageSize, timeout, debugTimeout);
+                EnforceBindingPolicies(_intranetBinding, maxReceivedMessageSize, timeout);
 
                 return _intranetBinding;
             }
 
-            private static void EnforceBindingPolicies(NetTcpBinding binding, long maxReceivedMessageSize, TimeSpan timeout, TimeSpan debugTimeout)
+            private static void EnforceBindingPolicies(NetTcpBinding binding, long maxReceivedMessageSize, TimeSpan timeout)
             {
                 binding.MaxReceivedMessageSize = maxReceivedMessageSize;
-#if DEBUG
-                binding.ReceiveTimeout = debugTimeout;
-#else
-            binding.ReceiveTimeout = timeout;
-#endif
+                binding.ReceiveTimeout = timeout;
             }
 
             public static Uri CreateAddress(string hostName)
@@ -77,7 +73,7 @@ namespace PB.SpiralOfTest.Infrastructure.Helpers
         public class ServiceBus
         {
             // TODO: Same "policy enforcing" logic as Intranet
-            public static NetMessagingBinding Binding(long maxReceivedMessageSize, TimeSpan timeout, TimeSpan debugTimeout)
+            public static NetMessagingBinding Binding(long maxReceivedMessageSize, TimeSpan timeout)
             {
                 return new NetMessagingBinding
                 {

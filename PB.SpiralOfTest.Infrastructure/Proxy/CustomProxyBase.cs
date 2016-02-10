@@ -16,18 +16,6 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         protected abstract ChannelFactory<TServiceContract> CreateFactory(TimeSpan timeout, long maxMessageSize);
 
-        protected TimeSpan Timeout
-        {
-            get
-            {
-#if DEBUG
-                return DebugTimeout;
-#else
-                return DefaultTimeout;
-#endif
-            }
-        }
-
         protected virtual string EnforceEndpointName
         {
             get

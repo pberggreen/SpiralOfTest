@@ -1,6 +1,5 @@
 ﻿using PB.SpiralOfTest.Infrastructure.Helpers;
 using System;
-using System.Configuration;
 using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Proxy
@@ -19,7 +18,7 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         protected override ChannelFactory<TServiceContract> CreateFactory(TimeSpan timeout, long maxMessageSize)
         {
-            var binding = BindingHelpers.Intranet.Binding(maxMessageSize, timeout, DebugTimeout);
+            var binding = BindingHelpers.Intranet.Binding(maxMessageSize, timeout);
             var baseAddress = BindingHelpers.Intranet.CreateAddress(_hostName);
             var address = new EndpointAddress(BindingHelpers.CreateAddress(baseAddress, EnforceEndpointName));
             return new ChannelFactory<TServiceContract>(binding, address);

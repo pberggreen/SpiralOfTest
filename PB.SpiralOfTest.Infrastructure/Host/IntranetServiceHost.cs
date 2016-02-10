@@ -36,7 +36,7 @@ namespace PB.SpiralOfTest.Infrastructure.Host
                 {
                     var endpointName = EnforceEndpointName(contractType);
                     var address = BindingHelpers.CreateAddress(baseAddress, endpointName);
-                    AddServiceEndpoint(contractType, BindingHelpers.Intranet.Binding(MaxReceiveMessageSize, DefaultConnectivityTimeout, DefaultDebugTimeout), address);
+                    AddServiceEndpoint(contractType, BindingHelpers.Intranet.Binding(MaxMessageSize, Timeout), address);
                 }
             }
         }

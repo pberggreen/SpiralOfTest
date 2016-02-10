@@ -41,7 +41,7 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
             var endpointName = EnforceEndpointName;
             var address = new EndpointAddress(BindingHelpers.CreateAddress(new Uri(endpoint), endpointName));
-            var binding = BindingHelpers.ServiceBus.Binding(DefaultMaxMessageSize, DefaultTimeout, DebugTimeout);
+            var binding = BindingHelpers.ServiceBus.Binding(DefaultMaxMessageSize, DefaultTimeout);
 
             var channelFactory = new ChannelFactory<TServiceContract>(binding, address);
             var endpointBehavior = new TransportClientEndpointBehavior

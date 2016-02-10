@@ -8,7 +8,7 @@ using PB.SpiralOfTest.Infrastructure.ServiceLocator;
 
 namespace PB.SpiralOfTest.Manager.Party
 {
-    [IntranetServiceBehavior]
+    [IntranetServiceBehavior(MaxMessageSize = 50000000, Timeout = "00:10:00")]
     public class PartyManager : ServiceBase, IPartyManager
     {
         static PartyManager()

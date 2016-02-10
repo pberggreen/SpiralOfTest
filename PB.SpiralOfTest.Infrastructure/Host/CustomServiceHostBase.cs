@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PB.SpiralOfTest.Infrastructure.Service;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 
@@ -19,22 +21,63 @@ namespace PB.SpiralOfTest.Infrastructure.Host
 
         //protected string ServiceName { get; }
 
-        protected virtual long MaxReceiveMessageSize => 65536;
+        protected virtual long DefaultMaxMessageSize => 65536;
         protected virtual TimeSpan DefaultDebugTimeout => TimeSpan.FromHours(1);
         protected virtual TimeSpan DefaultConnectivityTimeout => TimeSpan.FromMinutes(1);
 
+        private TimeSpan? _timeout = null; 
         protected TimeSpan Timeout
         {
             get
             {
-#if DEBUG
-                return DefaultDebugTimeout;
-#else
-                return DefaultConnectivityTimeout;
-#endif
+                if (!_timeout.HasValue)
+                {
+                    _timeout = GetTimeout();
+                }
+                return _timeout.Value;
             }
         }
-    
+
+        private TimeSpan GetTimeout()
+        {
+            if (Debugger.IsAttached)
+                return DefaultDebugTimeout;
+
+            var customServiceBehavior = (CustomServiceBehaviorAttribute)Attribute.GetCustomAttribute(Description.ServiceType, typeof(CustomServiceBehaviorAttribute));
+            if (customServiceBehavior != null)
+            {
+                TimeSpan timeout;
+                if (TimeSpan.TryParse(customServiceBehavior.Timeout, out timeout))
+                    return timeout;
+            }
+
+            return DefaultConnectivityTimeout;
+        }
+
+        private long? _maxMessageSize = null;
+        protected long MaxMessageSize
+        {
+            get
+            {
+                if (!_maxMessageSize.HasValue)
+                {
+                    _maxMessageSize = GetMaxMessageSize();
+                }
+                return _maxMessageSize.Value;
+            }
+        }
+
+        private long GetMaxMessageSize()
+        {
+            var customServiceBehavior = (CustomServiceBehaviorAttribute)Attribute.GetCustomAttribute(Description.ServiceType, typeof(CustomServiceBehaviorAttribute));
+            if (customServiceBehavior != null)
+            {
+                return customServiceBehavior.MaxMessageSize;
+            }
+
+            return DefaultMaxMessageSize;
+        }
+
         //protected void LoadConfiguration();
 
         protected override void ApplyConfiguration()
