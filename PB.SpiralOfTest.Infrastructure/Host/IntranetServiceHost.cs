@@ -24,6 +24,8 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         {
             base.ApplyEndpoints();
             ApplyIntranetEndpoints();
+
+            //this.SetSecurityBehavior(ServiceSecurity.Internet, "SignedByCA", true, "MyApplication");
         }
 
         protected void ApplyIntranetEndpoints()
@@ -36,7 +38,8 @@ namespace PB.SpiralOfTest.Infrastructure.Host
                 {
                     var endpointName = EnforceEndpointName(contractType);
                     var address = BindingHelpers.CreateAddress(baseAddress, endpointName);
-                    AddServiceEndpoint(contractType, BindingHelpers.Intranet.Binding(MaxMessageSize, Timeout), address);
+                    var binding = BindingHelpers.Intranet.Binding(MaxMessageSize, Timeout, DebugTimeout);
+                    AddServiceEndpoint(contractType, binding, address);
                 }
             }
         }

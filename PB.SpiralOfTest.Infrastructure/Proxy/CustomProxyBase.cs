@@ -24,12 +24,19 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             }
         }
 
-        public TServiceContract Channel { get; private set; }
+        private TServiceContract _channel;
 
-        protected CustomProxyBase()
+        public TServiceContract Channel
         {
-            var channelFactory = CreateFactory(DefaultTimeout, DefaultMaxMessageSize);
-            Channel = channelFactory.CreateChannel();
+            get
+            {
+                if (_channel == null)
+                {
+                    var channelFactory = CreateFactory(DefaultTimeout, DefaultMaxMessageSize);
+                    _channel = channelFactory.CreateChannel();
+                }
+                return _channel;
+            }
         }
 
         public void Call(Action<TServiceContract> action)

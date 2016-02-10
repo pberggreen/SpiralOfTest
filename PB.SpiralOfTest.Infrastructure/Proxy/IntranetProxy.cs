@@ -18,10 +18,12 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         protected override ChannelFactory<TServiceContract> CreateFactory(TimeSpan timeout, long maxMessageSize)
         {
-            var binding = BindingHelpers.Intranet.Binding(maxMessageSize, timeout);
+            var binding = BindingHelpers.Intranet.Binding(maxMessageSize, timeout, DebugTimeout);
             var baseAddress = BindingHelpers.Intranet.CreateAddress(_hostName);
             var address = new EndpointAddress(BindingHelpers.CreateAddress(baseAddress, EnforceEndpointName));
-            return new ChannelFactory<TServiceContract>(binding, address);
+            var channelFactory = new ChannelFactory<TServiceContract>(binding, address);
+            //channelFactory.SetCredentials("SignedByCA");
+            return channelFactory;
         }
 
     }

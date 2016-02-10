@@ -1,5 +1,7 @@
 ﻿using Microsoft.ServiceBus.Messaging;
 using System;
+using System.Diagnostics;
+using System.Net.Security;
 using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Helpers
@@ -18,32 +20,32 @@ namespace PB.SpiralOfTest.Infrastructure.Helpers
 
         public class Intranet
         {
-            static NetTcpBinding _intranetBinding;
-
-            public static NetTcpBinding Binding(long maxReceivedMessageSize, TimeSpan timeout)
+            public static NetTcpBinding Binding(long maxReceivedMessageSize, TimeSpan timeout, TimeSpan debugTimeout)
             {
-                if (_intranetBinding == null)
+                NetTcpBinding intranetBinding;
+                try
                 {
-                    try
-                    {
-                        // Try to create binding from the config file
-                        _intranetBinding = new NetTcpBinding("Intranet");
-                    }
-                    catch
-                    {
-                        _intranetBinding = DefaultBinding();
-                    }
+                    // Try to create binding from the config file
+                    intranetBinding = new NetTcpBinding("Intranet");
+                }
+                catch
+                {
+                    intranetBinding = DefaultBinding();
                 }
 
-                EnforceBindingPolicies(_intranetBinding, maxReceivedMessageSize, timeout);
+                EnforceBindingPolicies(intranetBinding, maxReceivedMessageSize, timeout, debugTimeout);
 
-                return _intranetBinding;
+                return intranetBinding;
             }
 
-            private static void EnforceBindingPolicies(NetTcpBinding binding, long maxReceivedMessageSize, TimeSpan timeout)
+            private static void EnforceBindingPolicies(NetTcpBinding binding, long maxReceivedMessageSize, TimeSpan timeout, TimeSpan debugTimeout)
             {
                 binding.MaxReceivedMessageSize = maxReceivedMessageSize;
                 binding.ReceiveTimeout = timeout;
+                if (Debugger.IsAttached)
+                {
+                    binding.ReceiveTimeout = debugTimeout;
+                }
             }
 
             public static Uri CreateAddress(string hostName)
@@ -61,11 +63,29 @@ namespace PB.SpiralOfTest.Infrastructure.Helpers
 
             private static NetTcpBinding DefaultBinding()
             {
-                return new NetTcpBinding
+                //This works on Azure: 
+                var netTcpBinding = new NetTcpBinding
                 {
-                    TransactionFlow = true,
-                    ReliableSession = { Enabled = true }
+                    Security = new NetTcpSecurity { Mode = SecurityMode.None }
                 };
+                return netTcpBinding;
+
+                //// With certificate
+                //return new NetTcpBinding
+                //{
+                //    TransactionFlow = true,
+                //    ReliableSession = { Enabled = true },
+                //    Security = new NetTcpSecurity
+                //    {
+                //        Mode = SecurityMode.Transport,
+                //        Transport = new TcpTransportSecurity
+                //        {
+                //            ClientCredentialType = TcpClientCredentialType.Certificate,
+                //            ProtectionLevel = ProtectionLevel.EncryptAndSign
+                //        }
+                //    },
+                //};
+
             }
 
         }

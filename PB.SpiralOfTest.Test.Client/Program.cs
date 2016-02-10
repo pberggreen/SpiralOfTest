@@ -1,5 +1,6 @@
 ﻿using PB.SpiralOfTest.Proxy.Party;
 using System;
+using System.Configuration;
 using PB.SpiralOfTest.Contract.EmailProvider;
 using PB.SpiralOfTest.Proxy.EmailProvider;
 using PB.SpiralOfTest.Infrastructure.ServiceLocator;
@@ -23,8 +24,9 @@ namespace PB.SpiralOfTest.Test.Client
                 if (input == "I")
                 {
                     Console.WriteLine("Sending invitations");
-                    //using (var partyManager = new PartyProxy())
-                    using (var partyManager = IoC.Resolve<IProxy<IPartyManager>>())
+                    var hostName = ConfigurationManager.AppSettings["HostName"];
+                    using (var partyManager = new PartyProxy(hostName))
+                    //using (var partyManager = IoC.Resolve<IProxy<IPartyManager>>())
                     {
                         var partyId = Guid.NewGuid();
                         partyManager.Call(proxy =>

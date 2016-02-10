@@ -22,7 +22,7 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         //protected string ServiceName { get; }
 
         protected virtual long DefaultMaxMessageSize => 65536;
-        protected virtual TimeSpan DefaultDebugTimeout => TimeSpan.FromHours(1);
+        protected virtual TimeSpan DebugTimeout => TimeSpan.FromHours(1);
         protected virtual TimeSpan DefaultConnectivityTimeout => TimeSpan.FromMinutes(1);
 
         private TimeSpan? _timeout = null; 
@@ -41,7 +41,7 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         private TimeSpan GetTimeout()
         {
             if (Debugger.IsAttached)
-                return DefaultDebugTimeout;
+                return DebugTimeout;
 
             var customServiceBehavior = (CustomServiceBehaviorAttribute)Attribute.GetCustomAttribute(Description.ServiceType, typeof(CustomServiceBehaviorAttribute));
             if (customServiceBehavior != null)
