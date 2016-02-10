@@ -1,5 +1,6 @@
 ﻿using Microsoft.ServiceBus.Messaging;
 using System;
+using System.Net.Security;
 using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Helpers
@@ -65,11 +66,29 @@ namespace PB.SpiralOfTest.Infrastructure.Helpers
 
             private static NetTcpBinding DefaultBinding()
             {
-                return new NetTcpBinding
+                //This works on Azure: 
+                var netTcpBinding = new NetTcpBinding
                 {
-                    TransactionFlow = true,
-                    ReliableSession = { Enabled = true }
+                    Security = new NetTcpSecurity { Mode = SecurityMode.None }
                 };
+                return netTcpBinding;
+
+                //// With certificate
+                //return new NetTcpBinding
+                //{
+                //    TransactionFlow = true,
+                //    ReliableSession = { Enabled = true },
+                //    Security = new NetTcpSecurity
+                //    {
+                //        Mode = SecurityMode.Transport,
+                //        Transport = new TcpTransportSecurity
+                //        {
+                //            ClientCredentialType = TcpClientCredentialType.Certificate,
+                //            ProtectionLevel = ProtectionLevel.EncryptAndSign
+                //        }
+                //    },
+                //};
+
             }
 
         }

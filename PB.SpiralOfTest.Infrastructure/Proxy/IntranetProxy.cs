@@ -22,7 +22,9 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
             var binding = BindingHelpers.Intranet.Binding(maxMessageSize, timeout, DebugTimeout);
             var baseAddress = BindingHelpers.Intranet.CreateAddress(_hostName);
             var address = new EndpointAddress(BindingHelpers.CreateAddress(baseAddress, EnforceEndpointName));
-            return new ChannelFactory<TServiceContract>(binding, address);
+            var channelFactory = new ChannelFactory<TServiceContract>(binding, address);
+            //channelFactory.SetCredentials("SignedByCA");
+            return channelFactory;
         }
 
     }

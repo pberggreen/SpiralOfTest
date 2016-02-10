@@ -24,6 +24,8 @@ namespace PB.SpiralOfTest.Infrastructure.Host
         {
             base.ApplyEndpoints();
             ApplyIntranetEndpoints();
+
+            //this.SetSecurityBehavior(ServiceSecurity.Internet, "SignedByCA", true, "MyApplication");
         }
 
         protected void ApplyIntranetEndpoints()
