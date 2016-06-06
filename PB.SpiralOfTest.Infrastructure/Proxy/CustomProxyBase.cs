@@ -67,25 +67,92 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
 
         public void Close()
         {
-            var proxy = Channel as ICommunicationObject;
-            if (proxy != null && proxy.State != CommunicationState.Faulted)
-            {
-                proxy.Close();
-            }
+            CloseOrAbortServiceChannel(Channel as ICommunicationObject);
+            _channel = null;
         }
 
         public void Abort()
         {
-            var proxy = Channel as ICommunicationObject;
-            if (proxy != null && proxy.State != CommunicationState.Faulted)
-            {
-                proxy.Abort();
-            }
+            CloseOrAbortServiceChannel(Channel as ICommunicationObject);
+            _channel = null;
         }
 
         public void Dispose()
         {
             Close();
+        }
+
+        /// <summary>
+        /// Close or abort the channel
+        /// </summary>
+        /// <remarks>
+        /// Taken from:
+        /// https://devzone.channeladam.com/articles/2014/09/how-to-easily-call-wcf-service-properly/
+        /// </remarks>
+        private void CloseOrAbortServiceChannel(ICommunicationObject communicationObject)
+        {
+            bool isClosed = false;
+
+            if (communicationObject == null || communicationObject.State == CommunicationState.Closed)
+            {
+                return;
+            }
+
+            try
+            {
+                if (communicationObject.State != CommunicationState.Faulted)
+                {
+                    communicationObject.Close();
+                    isClosed = true;
+                }
+            }
+            catch (CommunicationException)
+            {
+                // Catch this expected exception so it is not propagated further.
+                // Perhaps write this exception out to log file for gathering statistics...
+            }
+            catch (TimeoutException)
+            {
+                // Catch this expected exception so it is not propagated further.
+                // Perhaps write this exception out to log file for gathering statistics...
+            }
+            catch (Exception)
+            {
+                // An unexpected exception that we don't know how to handle.
+                // Perhaps write this exception out to log file for support purposes...
+                throw;
+            }
+            finally
+            {
+                // If State was Faulted or any exception occurred while doing the Close(), then do an Abort()
+                if (!isClosed)
+                {
+                    AbortServiceChannel(communicationObject);
+                }
+            }
+        }
+
+
+        private static void AbortServiceChannel(ICommunicationObject communicationObject)
+        {
+            try
+            {
+                communicationObject.Abort();
+            }
+            catch (Exception)
+            {
+                // An unexpected exception that we don't know how to handle.
+                // If we are in this situation:
+                // - we should NOT retry the Abort() because it has already failed and there is nothing to suggest it could be successful next time
+                // - the abort may have partially succeeded
+                // - the actual service call may have been successful
+                //
+                // The only thing we can do is hope that the channel's resources have been released.
+                // Do not rethrow this exception because the actual service operation call might have succeeded
+                // and an exception closing the channel should not stop the client doing whatever it does next.
+                //
+                // Perhaps write this exception out to log file for gathering statistics and support purposes...
+            }
         }
     }
 }
