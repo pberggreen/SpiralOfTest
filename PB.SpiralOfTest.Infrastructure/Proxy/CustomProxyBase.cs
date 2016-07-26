@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.ServiceModel;
 
 namespace PB.SpiralOfTest.Infrastructure.Proxy
@@ -34,6 +35,7 @@ namespace PB.SpiralOfTest.Infrastructure.Proxy
                 {
                     var channelFactory = CreateFactory(DefaultTimeout, DefaultMaxMessageSize);
                     _channel = channelFactory.CreateChannel();
+                    ((IContextChannel)_channel).OperationTimeout = Debugger.IsAttached ? DebugTimeout : DefaultTimeout;
                 }
                 return _channel;
             }
