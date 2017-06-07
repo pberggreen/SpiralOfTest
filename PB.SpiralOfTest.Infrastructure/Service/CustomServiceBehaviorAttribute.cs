@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
@@ -39,7 +40,7 @@ namespace PB.SpiralOfTest.Infrastructure.Service
 
         private void EnforceServiceBehavior(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
         {
-            ServiceBehaviorAttribute serviceBehavior = (ServiceBehaviorAttribute)Attribute.GetCustomAttribute(typeof(CustomServiceBehaviorAttribute), typeof(CustomOperationBehaviorAttribute));
+            ServiceBehaviorAttribute serviceBehavior = (ServiceBehaviorAttribute)serviceDescription.Behaviors.FirstOrDefault(behavior => behavior is ServiceBehaviorAttribute);
             if (serviceBehavior != null)
             {
                 serviceBehavior.InstanceContextMode = InstanceContextMode.PerCall;
